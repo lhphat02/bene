@@ -1,0 +1,66 @@
+{
+  "common": {
+    "appName": "BeeEh&Eh",
+    "error": "Lỗi",
+    "back": "Quay lại",
+    "save": "Lưu",
+    "loading": "Đang tải...",
+    "submit": "Gửi",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy"
+  },
+  "home": {
+    "explore": "Khám phá",
+    "featuredProperties": "Các căn hộ nổi bật",
+    "popularDestinations": "Điểm đến phổ biến",
+    "searchPlaceholder": "Tìm kiếm địa điểm, căn hộ..."
+  },
+  "search": {
+    "searchButton": "Tìm kiếm",
+    "filters": "Bộ lọc",
+    "sortBy": "Sắp xếp theo",
+    "applyFilters": "Áp dụng bộ lọc",
+    "resultsFound": "Tìm thấy {count} kết quả",
+    "noResults": "Không tìm thấy kết quả.",
+    "showMore": "Hiển thị thêm",
+    "showLess": "Thu gọn",
+    "checkIn": "Ngày nhận phòng",
+    "checkOut": "Ngày trả phòng",
+    "guests": "Số khách"
+  },
+  "accommodations": {
+    "accommodationTypes": "Loại chỗ ở",
+    "priceRange": "Phạm vi giá",
+    "price": "Giá",
+    
+    "description": "Mô tả",
+    "overview": "Tổng quan",
+    "amenities": "Tiện nghi",
+    "location": "Vị trí",
+    "rating": "Đánh giá",
+    "feedback": "Phản hồi",
+    "availability": "Tình trạng"
+  },
+  "profile": {
+    "title": "Hồ sơ",
+    "role": "Vai trò",
+    "yourProfile": "Hồ sơ của bạn",
+    "editProfile": "Chỉnh sửa hồ sơ",
+    "changePassword": "Đổi mật khẩu",
+    "logout": "Đăng xuất"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "language": "Ngôn ngữ",
+    "darkMode": "Chế độ tối",
+    "notifications": "Thông báo",
+    "privacy": "Quyền riêng tư",
+    "aboutUs": "Về chúng tôi",
+    "contactUs": "Liên hệ chúng tôi"
+  },
+  "error": {
+    "networkError": "Lỗi mạng xảy ra. Vui lòng thử lại sau.",
+    "notFound": "Không tìm thấy trang.",
+    "genericError": "Có lỗi xảy ra. Vui lòng thử lại sau."
+  }
+}

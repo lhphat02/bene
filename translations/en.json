@@ -1,0 +1,51 @@
+{
+  "common": {
+    "appName": "BeeEh&Eh",
+    "loading": "Loading...",
+    "noResults": "No results found.",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "home": {
+    "title": "Home",
+    "welcomeMessage": "Welcome to BENE!",
+    "recentPosts": "Recent Posts",
+    "readMore": "Read More",
+    "loadMore": "Load More"
+  },
+  "blog": {
+    "title": "Blog",
+    "publishedOn": "Published on {{date}} by {{author}}",
+    "tags": "Tags: {{tags}}",
+    "comments": "{{count}} Comment",
+    "comments_plural": "{{count}} Comments",
+    "leaveComment": "Leave a Comment",
+    "commentPlaceholder": "Write your comment here...",
+    "relatedPosts": "Related Posts"
+  },
+  "profile": {
+    "title": "Profile",
+    "yourProfile": "Your Profile",
+    "editProfile": "Edit Profile",
+    "changePassword": "Change Password",
+    "logout": "Logout",
+    "savedPosts": "Saved Posts",
+    "likedPosts": "Liked Posts",
+    "comments": "Comments"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "darkMode": "Dark Mode",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us"
+  },
+  "error": {
+    "title": "Error",
+    "networkError": "Network error occurred. Please try again later.",
+    "notFound": "Page not found.",
+    "genericError": "An error occurred. Please try again later."
+  }
+}
