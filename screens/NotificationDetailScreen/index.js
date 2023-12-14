@@ -10,9 +10,7 @@ const NotificationDetailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('home.welcomeMessage')}</Text>
-      {/* Add your home screen content here */}
-      <LanguageSwitch />
+      <Text style={styles.title}>Noti Detail Screen</Text>
     </View>
   );
 };

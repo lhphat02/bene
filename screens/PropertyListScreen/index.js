@@ -7,8 +7,7 @@ const PropertyListScreen = () => {
 
   return (
     <View>
-      <Text>{t('profile.title')}</Text>
-      {/* Add your profile screen content here */}
+      <Text>PropertyListScreen</Text>
     </View>
   );
 };

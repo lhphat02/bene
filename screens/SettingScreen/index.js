@@ -1,15 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text } from 'react-native';
+import LanguageSwitch from '../../components/LanguageSwitch';
 
-const SearchScreen = () => {
+const ProfileScreen = () => {
   const { t } = useTranslation();
 
   return (
     <View>
-      <Text>Search Screen</Text>
+      <LanguageSwitch />
     </View>
   );
 };
 
-export default SearchScreen;
+export default ProfileScreen;

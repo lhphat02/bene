@@ -5,11 +5,10 @@ import i18n from 'i18next';
 import { NavigationContainer } from '@react-navigation/native';
 
 // Internal imports
-import { MainBottom } from './components/Navigator';
+import { AuthStack, MainBottom } from './components/Navigator';
 import { TranslationProvider } from './context/TranslationProvider';
 import { enTranslation, viTranslation } from './translations';
 import { ThemeProvider } from './context/ThemeContext';
-import { NativeScreenNavigationContainer } from 'react-native-screens';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -32,7 +31,8 @@ const App = () => {
     <TranslationProvider>
       <ThemeProvider>
         <NavigationContainer>
-          <MainBottom />
+          {/* <MainBottom /> */}
+          <AuthStack />
         </NavigationContainer>
       </ThemeProvider>
     </TranslationProvider>

@@ -6,15 +6,19 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import { ThemeContext } from '../../context/ThemeContext';
 import {
+  AccomdtDetailScreen,
+  AccomdtListScreen,
   AddPropertyScreen,
   HomeScreen,
   LoginScreen,
+  NotificationDetailScreen,
   NotificationScreen,
   ProfileScreen,
   PropertyDetailScreen,
   PropertyListScreen,
   RegisterScreen,
   SearchScreen,
+  SettingSceen,
 } from '../../screens';
 
 const Stack = createStackNavigator();
@@ -29,6 +33,7 @@ const AuthStack = () => {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
+        headerShown: false,
         headerStyle: {
           backgroundColor: isDarkMode ? '#413F42' : '#fff',
         },
@@ -47,6 +52,68 @@ const AuthStack = () => {
         component={RegisterScreen}
         options={{
           title: 'Register',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const NotificationStack = () => {
+  const { isDarkMode } = useContext(ThemeContext);
+
+  return (
+    <Stack.Navigator
+      initialRouteName="Notification"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+        },
+        headerTintColor: isDarkMode ? '#fff' : '#000',
+      }}
+    >
+      <Stack.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{
+          title: 'Notification',
+        }}
+      />
+      <Stack.Screen
+        name="NotificationDetail"
+        component={NotificationDetailScreen}
+        options={{
+          title: 'Notification Detail',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const ProfileStack = () => {
+  const { isDarkMode } = useContext(ThemeContext);
+
+  return (
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+        },
+        headerTintColor: isDarkMode ? '#fff' : '#000',
+      }}
+    >
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: 'Profile',
+        }}
+      />
+      <Stack.Screen
+        name="Setting"
+        component={SettingSceen}
+        options={{
+          title: 'Setting',
         }}
       />
     </Stack.Navigator>
@@ -96,17 +163,12 @@ const PropertyStack = () => {
   );
 };
 
-/**
- * Renders a top tab navigator component for the accommodation list.
- * @returns {JSX.Element} The rendered top tab navigator component.
- */
-const AccomdtListTopTab = () => {
-  // Access theme context from the ThemeContext provider
+const AccomdtStack = () => {
   const { isDarkMode } = useContext(ThemeContext);
 
   return (
-    <TopTab.Navigator
-      initialRouteName="Home"
+    <Stack.Navigator
+      initialRouteName="Search"
       screenOptions={{
         headerStyle: {
           backgroundColor: isDarkMode ? '#413F42' : '#fff',
@@ -122,10 +184,54 @@ const AccomdtListTopTab = () => {
         }}
       />
       <Stack.Screen
+        name="AccomdtList"
+        component={AccomdtListScreen}
+        options={{
+          title: 'Add property',
+        }}
+      />
+      <Stack.Screen
+        name="AccomdtDetail"
+        component={AccomdtDetailScreen}
+        options={{
+          title: 'Accommodation detail',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+/**
+ * Renders a top tab navigator component for the accommodation list.
+ * @returns {JSX.Element} The rendered top tab navigator component.
+ */
+const AccomdtTopTab = () => {
+  // Access theme context from the ThemeContext provider
+  const { isDarkMode } = useContext(ThemeContext);
+
+  return (
+    <TopTab.Navigator
+      initialRouteName="AccomdtStack"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+        },
+        headerTintColor: isDarkMode ? '#fff' : '#000',
+      }}
+    >
+      <Stack.Screen
+        name="AccomdtStack"
+        component={AccomdtStack}
+        options={{
+          title: 'Find home',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="PropertyStack"
         component={PropertyStack}
         options={{
-          title: 'Add Note',
+          title: 'Your homes',
         }}
       />
     </TopTab.Navigator>
@@ -170,12 +276,13 @@ const MainBottom = () => {
         }}
       />
       <Tab.Screen
-        name="AccomdtList"
-        component={AccomdtListTopTab}
+        name="AccomdtTopTab"
+        component={AccomdtTopTab}
         options={{
+          title: 'Accommodations',
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
-              name="settings"
+              name="search"
               color={focused ? 'orange' : 'gray'}
               size={size}
             />
@@ -183,12 +290,13 @@ const MainBottom = () => {
         }}
       />
       <Tab.Screen
-        name="Notification"
-        component={NotificationScreen}
+        name="NotificationStack"
+        component={NotificationStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
-              name="settings"
+              name="notifications"
               color={focused ? 'orange' : 'gray'}
               size={size}
             />
@@ -196,9 +304,10 @@ const MainBottom = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
               name="person-circle"

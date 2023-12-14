@@ -6,11 +6,12 @@ import BookingScreen from './BookingScreen';
 import RegisterScreen from './RegisterScreen';
 import SearchScreen from './SearchScreen';
 import ProfileScreen from './ProfileScreen';
-import NotificationScreen from './NotificationDetailScreen';
+import NotificationScreen from './NotificationScreen';
 import NotificationDetailScreen from './NotificationDetailScreen';
 import PropertyDetailScreen from './PropertyDetailScreen';
 import PropertyListScreen from './PropertyListScreen';
 import AddPropertyScreen from './AddPropertyScreen';
+import SettingSceen from './SettingScreen';
 
 export {
   AccomdtDetailScreen,
@@ -26,4 +27,5 @@ export {
   PropertyDetailScreen,
   PropertyListScreen,
   AddPropertyScreen,
+  SettingSceen,
 };
