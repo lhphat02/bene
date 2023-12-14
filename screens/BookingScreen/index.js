@@ -1,12 +1,12 @@
-// HomeScreen.js
 import React from 'react';
 import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitch from '../../components/LanguageSwitch/LanguageSwitch';
-import styles from './styles';
+import LanguageSwitch from '../../components/LanguageSwitch';
+import getStyles from './styles';
 
-const HomeScreen = () => {
+const BookingScreen = () => {
   const { t } = useTranslation();
+  const styles = getStyles();
 
   return (
     <View style={styles.container}>
@@ -17,4 +17,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default BookingScreen;

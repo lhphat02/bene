@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 import i18n from 'i18next';
 
-import styles from './styles';
+import getStyles from './styles';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const LanguageSwitch = () => {
+  const {
+    theme: { colors },
+    isDarkMode,
+  } = useContext(ThemeContext);
+  const styles = getStyles(isDarkMode, colors);
+
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
