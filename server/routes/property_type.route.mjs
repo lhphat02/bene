@@ -1,30 +1,30 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";
-import User from "../model/user.mjs";
+import PropertyType from "../model/propety_type.mjs";
 
 const router = express.Router();
 // const db = mongoose.connection;
 
-router.get("/getAllUsers", async (req, res) => {
+router.get("/getAllPropertyTypes", async (req, res) => {
   try {
-    let collection = await db.collection("users");
+    let collection = await db.collection("property_type");
     let results = await collection.find({}).toArray();
     res.status(200).send({
       resultCode: 1,
-      message: "Get all users successfully",
+      message: "Get all property_type successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
       resultCode: -1,
-      message: "Get all users failed",
+      message: "Get all property_type failed",
       data: null,
     });
   }
 });
 
-router.post("/createUser", async (req, res) => {
+router.post("/createPropertyType", async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
 
@@ -47,35 +47,28 @@ router.post("/createUser", async (req, res) => {
     //   email,
     // });
 
-    const newUser = new User(req.body);
-    if (
-      req.body.username == null ||
-      req.body.password == null ||
-      req.body.displayName == null ||
-      req.body.phoneNumber == null ||
-      req.body.email == null
-    ) {
+    const newPropertyType = new PropertyType(req.body);
+    if (req.body.property_type == null) {
       res.status(500).send({
         resultCode: -1,
         message: "Data cannot be empty",
         data: null,
       });
     } else {
-      let collection = await db.collection("users");
-      const result = await collection.insertOne(newUser);
+      let collection = await db.collection("property_type");
+      const result = await collection.insertOne(newPropertyType);
 
       res.status(201).send({
         resultCode: 1,
-        message: "User created successfully",
-        data: newUser,
+        message: "PropertyType created successfully",
+        data: newPropertyType,
       });
     }
-    // Save the new user to the database
   } catch (error) {
     console.error(error);
     res.status(500).send({
       resultCode: -1,
-      message: "Failed to create user",
+      message: "Failed to create PropertyType",
       data: result,
     });
   }

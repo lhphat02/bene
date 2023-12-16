@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+import Mongoose from "mongoose";
 
 const propertyTypeSchema = new Mongoose.Schema({
   property_type: {
@@ -8,4 +8,5 @@ const propertyTypeSchema = new Mongoose.Schema({
   },
 });
 
-export default Mongoose.model("PropertyType", propertyTypeSchema);
+const PropertyType = Mongoose.model("PropertyType", propertyTypeSchema);
+export default PropertyType;

@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+import Mongoose from "mongoose";
 
 const notificationSchema = new Mongoose.Schema({
   user_id: {
@@ -15,4 +15,5 @@ const notificationSchema = new Mongoose.Schema({
   },
 });
 
-export default Mongoose.model("Notification", notificationSchema);
+const Notification = Mongoose.model("Notification", notificationSchema);
+export default Notification;

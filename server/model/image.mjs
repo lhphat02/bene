@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+import Mongoose from "mongoose";
 
 const imageSchema = new Mongoose.Schema({
   property_id: {
@@ -15,4 +15,5 @@ const imageSchema = new Mongoose.Schema({
   },
 });
 
-export default Mongoose.model("Image", imageSchema);
+const Image = Mongoose.model("Image", imageSchema);
+export default Image;

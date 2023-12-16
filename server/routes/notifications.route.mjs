@@ -1,30 +1,30 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";
-import User from "../model/user.mjs";
+import Notification from "../model/notifications.mjs";
 
 const router = express.Router();
 // const db = mongoose.connection;
 
-router.get("/getAllUsers", async (req, res) => {
+router.get("/getAllNotificaitons", async (req, res) => {
   try {
-    let collection = await db.collection("users");
+    let collection = await db.collection("notification");
     let results = await collection.find({}).toArray();
     res.status(200).send({
       resultCode: 1,
-      message: "Get all users successfully",
+      message: "Get all notification successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
       resultCode: -1,
-      message: "Get all users failed",
+      message: "Get all notification failed",
       data: null,
     });
   }
 });
 
-router.post("/createUser", async (req, res) => {
+router.post("/createNotification", async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
 
@@ -47,13 +47,11 @@ router.post("/createUser", async (req, res) => {
     //   email,
     // });
 
-    const newUser = new User(req.body);
+    const newNotification = new Notification(req.body);
     if (
-      req.body.username == null ||
-      req.body.password == null ||
-      req.body.displayName == null ||
-      req.body.phoneNumber == null ||
-      req.body.email == null
+      req.body.user_id == null ||
+      req.body.message == null ||
+      req.body.time_stamp == null
     ) {
       res.status(500).send({
         resultCode: -1,
@@ -61,21 +59,20 @@ router.post("/createUser", async (req, res) => {
         data: null,
       });
     } else {
-      let collection = await db.collection("users");
-      const result = await collection.insertOne(newUser);
+      let collection = await db.collection("notification");
+      const result = await collection.insertOne(newNotification);
 
       res.status(201).send({
         resultCode: 1,
-        message: "User created successfully",
-        data: newUser,
+        message: "Notification created successfully",
+        data: newNotification,
       });
     }
-    // Save the new user to the database
   } catch (error) {
     console.error(error);
     res.status(500).send({
       resultCode: -1,
-      message: "Failed to create user",
+      message: "Failed to create Notification",
       data: result,
     });
   }

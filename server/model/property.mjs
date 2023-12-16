@@ -1,6 +1,6 @@
-import { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const propertySchema = new Mongoose.Schema({
+const propertySchema = new mongoose.Schema({
   user_id: {
     type: String,
     required: true,
@@ -48,4 +48,5 @@ const propertySchema = new Mongoose.Schema({
   },
 });
 
-export default Mongoose.model("Property", propertySchema);
+const Property = mongoose.model("Property", propertySchema);
+export default Property;

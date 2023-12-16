@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+import Mongoose from "mongoose";
 
 const bookingSchema = new Mongoose.Schema({
   user_id: {
@@ -35,4 +35,5 @@ const bookingSchema = new Mongoose.Schema({
   },
 });
 
-export default Mongoose.model("Booking", bookingSchema);
+const Booking = Mongoose.model("Booking", bookingSchema);
+export default Booking;
