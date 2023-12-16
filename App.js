@@ -3,12 +3,15 @@ import 'intl-pluralrules';
 import { initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
 import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
 
 // Internal imports
 import { AuthStack, MainBottom } from './components/Navigator';
 import { TranslationProvider } from './context/TranslationProvider';
-import { enTranslation, viTranslation } from './translations';
+import { enTranslation, viTranslation } from './constants/translations';
 import { ThemeProvider } from './context/ThemeContext';
+import { StatusBar } from 'react-native';
+// import store from './redux/store';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -29,12 +32,15 @@ i18n.use(initReactI18next).init({
 const App = () => {
   return (
     <TranslationProvider>
-      <ThemeProvider>
-        <NavigationContainer>
-          {/* <MainBottom /> */}
-          <AuthStack />
-        </NavigationContainer>
-      </ThemeProvider>
+      <NavigationContainer>
+        {/* <Provider store={store}> */}
+        <ThemeProvider>
+          <MainBottom />
+          <StatusBar style="auto" />
+          {/* <AuthStack /> */}
+        </ThemeProvider>
+        {/* </Provider> */}
+      </NavigationContainer>
     </TranslationProvider>
   );
 };

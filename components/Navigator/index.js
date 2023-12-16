@@ -20,10 +20,14 @@ import {
   SearchScreen,
   SettingSceen,
 } from '../../screens';
+import theme from '../../constants/theme';
+import { SafeAreaView } from 'react-native-web';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
+
+const { colors, darkColors } = theme;
 
 const AuthStack = () => {
   // Access theme context from the ThemeContext provider
@@ -33,7 +37,7 @@ const AuthStack = () => {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerShown: false,
+        // headerShown: false,
         headerStyle: {
           backgroundColor: isDarkMode ? '#413F42' : '#fff',
         },
@@ -66,8 +70,9 @@ const NotificationStack = () => {
       initialRouteName="Notification"
       screenOptions={{
         headerStyle: {
-          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+          backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
+        headerTitleAlign: 'center',
         headerTintColor: isDarkMode ? '#fff' : '#000',
       }}
     >
@@ -97,8 +102,9 @@ const ProfileStack = () => {
       initialRouteName="Profile"
       screenOptions={{
         headerStyle: {
-          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+          backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
+        headerTitleAlign: 'center',
         headerTintColor: isDarkMode ? '#fff' : '#000',
       }}
     >
@@ -214,9 +220,16 @@ const AccomdtTopTab = () => {
       initialRouteName="AccomdtStack"
       screenOptions={{
         headerStyle: {
-          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+          backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
-        headerTintColor: isDarkMode ? '#fff' : '#000',
+        headerTintColor: isDarkMode ? 'white' : '#000',
+        tabBarStyle: {
+          backgroundColor: isDarkMode ? darkColors.primary : '#fff',
+        },
+        tabBarActiveTintColor: isDarkMode ? colors.tertiary : colors.primary,
+        tabBarIndicatorStyle: {
+          backgroundColor: isDarkMode ? colors.tertiary : colors.primary,
+        },
       }}
     >
       <Stack.Screen
@@ -252,10 +265,12 @@ const MainBottom = () => {
       screenOptions={{
         headerTintColor: isDarkMode ? '#fff' : '#000',
         headerStyle: {
-          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+          backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
+        headerTitleAlign: 'center',
+
         tabBarStyle: {
-          backgroundColor: isDarkMode ? '#413F42' : '#fff',
+          backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
         tabBarShowLabel: false,
       }}
@@ -269,7 +284,13 @@ const MainBottom = () => {
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
               name="home"
-              color={focused ? 'orange' : 'gray'}
+              color={
+                focused
+                  ? isDarkMode
+                    ? colors.tertiary
+                    : colors.primary
+                  : darkColors.tertiary
+              }
               size={size}
             />
           ),
@@ -279,11 +300,18 @@ const MainBottom = () => {
         name="AccomdtTopTab"
         component={AccomdtTopTab}
         options={{
+          headerShown: false,
           title: 'Accommodations',
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
               name="search"
-              color={focused ? 'orange' : 'gray'}
+              color={
+                focused
+                  ? isDarkMode
+                    ? colors.tertiary
+                    : colors.primary
+                  : darkColors.tertiary
+              }
               size={size}
             />
           ),
@@ -297,7 +325,13 @@ const MainBottom = () => {
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
               name="notifications"
-              color={focused ? 'orange' : 'gray'}
+              color={
+                focused
+                  ? isDarkMode
+                    ? colors.tertiary
+                    : colors.primary
+                  : darkColors.tertiary
+              }
               size={size}
             />
           ),
@@ -311,7 +345,13 @@ const MainBottom = () => {
           tabBarIcon: ({ size, focused }) => (
             <Ionicons
               name="person-circle"
-              color={focused ? 'orange' : 'gray'}
+              color={
+                focused
+                  ? isDarkMode
+                    ? colors.tertiary
+                    : colors.primary
+                  : darkColors.tertiary
+              }
               size={size}
             />
           ),

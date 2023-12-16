@@ -1,7 +1,10 @@
 import { StyleSheet } from 'react-native';
+import theme from '../../constants/theme';
+
+const { colors } = theme;
 
 //20520683 - Luu Huynh Phat
-const getStyles = (isDarkMode, colors) =>
+const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
       padding: 10,

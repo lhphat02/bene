@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
+import Logo from '../../components/Logo';
+import Divider from '../../components/Divider';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const { t } = useTranslation();
-  const {
-    theme: { colors },
-    isDarkMode,
-  } = useContext(ThemeContext);
-  const styles = getStyles(isDarkMode, colors);
+  const { isDarkMode } = useContext(ThemeContext);
+  const styles = getStyles(isDarkMode);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Login</Text>
+      <Logo width={120} height={120} />
+      {/* <Text style={styles.header}>Login</Text> */}
       <View style={styles.form}>
         <TextInput
           style={styles.textInput}
@@ -27,7 +27,18 @@ const LoginScreen = () => {
           placeholderTextColor={isDarkMode ? 'white' : 'black'}
         />
       </View>
-      <Button title="Login" />
+      <TouchableOpacity style={styles.button} onPress={() => alert('Login')}>
+        <Text style={styles.buttonText}>Sign In</Text>
+      </TouchableOpacity>
+
+      <Divider dividerText="Or" />
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Register')}
+      >
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 };
