@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 import Property from "../model/property.mjs";
 
 const router = express.Router();
@@ -78,11 +79,85 @@ router.post("/createProperty", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    
+
     res.status(500).send({
       resultCode: -1,
       message: "Failed to create property",
       data: result,
+    });
+  }
+});
+
+router.post("/editProperty", async (req, res) => {
+  try {
+    const {
+      property_id,
+      // user_id,
+      property_name,
+      description,
+      address,
+      price_per_night,
+      max_guests,
+      beds,
+      bedrooms,
+      size,
+      long_lat,
+      availability,
+    } = req.body;
+    console.log(req.body);
+    const query = { _id: new ObjectId(property_id) };
+    const editProperty = {
+      $set: {
+        property_name,
+        // user_id,
+        description,
+        address,
+        price_per_night,
+        max_guests,
+        beds,
+        bedrooms,
+        size,
+        long_lat,
+        availability,
+      },
+    };
+
+    const collection = await db.collection("property");
+    const result = await collection.updateOne(query, editProperty);
+
+    res.status(200).send({
+      resultCode: 1,
+      message: "Property updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error in updateProperty:", error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Failed to update property",
+      data: null,
+    });
+  }
+});
+
+router.post("/deleteProperty", async (req, res) => {
+  try {
+    const { property_id } = req.body;
+    const query = { _id: new ObjectId(property_id) };
+    const collection = await db.collection("property");
+    const result = await collection.deleteOne(query);
+
+    res.status(200).send({
+      resultCode: 1,
+      message: "Property deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error in deleteProperty:", error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Failed to delete property",
+      data: null,
     });
   }
 });

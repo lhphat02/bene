@@ -3,6 +3,7 @@ import db from "../db/conn.mjs";
 import mongoose from "mongoose";
 import User from "../model/user.mjs";
 import bcrypt from "bcrypt";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 // const db = mongoose.connection;
@@ -107,6 +108,39 @@ router.post("/login", async (req, res) => {
     res.status(500).send({
       resultCode: -1,
       message: "Login failed",
+    });
+  }
+});
+
+router.post("/updateUser", async (req, res) => {
+  try {
+    const { user_id, password, displayName, phoneNumber, email, deactivated } =
+      req.body;
+    const newPassword = await bcrypt.hash(password, 10);
+    const query = { _id: new ObjectId(user_id) };
+    const update = {
+      $set: {
+        password: newPassword,
+        displayName,
+        phoneNumber,
+        email,
+        deactivated,
+      },
+    };
+
+    const collection = await db.collection("users");
+    const result = await collection.updateOne(query, update);
+
+    res.status(200).send({
+      resultCode: 1,
+      message: "Update user successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Update user failed:", error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Update user failed",
     });
   }
 });

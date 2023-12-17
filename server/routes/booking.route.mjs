@@ -2,6 +2,7 @@ import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";
 import Booking from "../model/booking.mjs";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 // const db = mongoose.connection;
@@ -78,6 +79,88 @@ router.post("/createBooking", async (req, res) => {
     res.status(500).send({
       resultCode: -1,
       message: "Failed to create Booking",
+      data: result,
+    });
+  }
+});
+
+router.post("/updateBooking", async (req, res) => {
+  try {
+    const {
+      booking_id,
+      check_in_date,
+      check_out_date,
+      guests,
+      total_price,
+      booking_status,
+    } = req.body;
+
+    const booking = {
+      $set: {
+        check_in_date,
+        check_out_date,
+        guests,
+        total_price,
+        booking_date: new Date(),
+        booking_status,
+      },
+    };
+
+    if (booking_id == null) {
+      res.status(500).send({
+        resultCode: -1,
+        message: "Booking ID cannot be empty",
+        data: null,
+      });
+    } else {
+      const query = { _id: new ObjectId(booking_id) };
+
+      let collection = await db.collection("booking");
+      const result = await collection.updateOne(query, booking);
+
+      res.status(201).send({
+        resultCode: 1,
+        message: "Booking updated successfully",
+        data: result,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Failed to update booking",
+      data: result,
+    });
+  }
+});
+
+router.post("/deleteBooking", async (req, res) => {
+  try {
+    const { booking_id } = req.body;
+
+    if (booking_id == null) {
+      res.status(500).send({
+        resultCode: -1,
+        message: "Booking ID cannot be empty",
+        data: null,
+      });
+    } else {
+      const query = { _id: new ObjectId(booking_id) };
+
+      let collection = await db.collection("booking");
+      const result = await collection.deleteOne(query);
+
+      res.status(201).send({
+        resultCode: 1,
+        message: "Booking deleted successfully",
+        data: result,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Failed to delete booking",
       data: result,
     });
   }
