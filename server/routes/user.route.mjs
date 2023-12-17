@@ -2,6 +2,8 @@ import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";
 import User from "../model/user.mjs";
+import bcrypt from "bcrypt";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 // const db = mongoose.connection;
@@ -61,6 +63,7 @@ router.post("/createUser", async (req, res) => {
         data: null,
       });
     } else {
+      newUser.password = await bcrypt.hash(newUser.password, 10);
       let collection = await db.collection("users");
       const result = await collection.insertOne(newUser);
 
@@ -77,6 +80,67 @@ router.post("/createUser", async (req, res) => {
       resultCode: -1,
       message: "Failed to create user",
       data: result,
+    });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const collection = await db.collection("users");
+    const user = await collection.findOne({ username: req.body.username });
+    if (user) {
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+        // user.token = createToken(user._id);
+        res.status(200).send({
+          resultCode: 1,
+          message: "Login successfully",
+          data: user,
+        });
+      } else {
+        res.status(400).send({
+          resultCode: -1,
+          message: "Login failed",
+        });
+      }
+    }
+  } catch (error) {
+    console.error("Login Failed:", error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Login failed",
+    });
+  }
+});
+
+router.post("/updateUser", async (req, res) => {
+  try {
+    const { user_id, password, displayName, phoneNumber, email, deactivated } =
+      req.body;
+    const newPassword = await bcrypt.hash(password, 10);
+    const query = { _id: new ObjectId(user_id) };
+    const update = {
+      $set: {
+        password: newPassword,
+        displayName,
+        phoneNumber,
+        email,
+        deactivated,
+      },
+    };
+
+    const collection = await db.collection("users");
+    const result = await collection.updateOne(query, update);
+
+    res.status(200).send({
+      resultCode: 1,
+      message: "Update user successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Update user failed:", error);
+    res.status(500).send({
+      resultCode: -1,
+      message: "Update user failed",
     });
   }
 });
