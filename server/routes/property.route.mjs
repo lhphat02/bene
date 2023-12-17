@@ -78,6 +78,7 @@ router.post("/createProperty", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+    
     res.status(500).send({
       resultCode: -1,
       message: "Failed to create property",
