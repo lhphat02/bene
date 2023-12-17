@@ -1,9 +1,14 @@
 import { TextInput, View, Keyboard, Button } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
 
-import styles from './styles';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
+import getStyles from './styles';
 
 const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
+  const { isDarkMode } = useContext(ThemeContext);
+  const styles = getStyles(isDarkMode);
+
   return (
     <View style={styles.container}>
       <View
@@ -15,19 +20,20 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
         <Feather
           name="search"
           size={20}
-          color="black"
+          color={isDarkMode ? 'black' : 'white'}
           style={{ marginLeft: 1 }}
         />
         {/* Input field */}
         <TextInput
           style={styles.input}
           placeholder="Search"
+          placeholderTextColor={isDarkMode ? 'black' : 'white'}
           value={searchPhrase}
           onChangeText={setSearchPhrase}
           onFocus={() => setClicked(true)}
         />
         {/* cross Icon, depending on whether the search bar is clicked or not */}
-        {clicked && (
+        {clicked && searchPhrase ? (
           <Entypo
             name="cross"
             size={20}
@@ -37,7 +43,7 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
               setSearchPhrase('');
             }}
           />
-        )}
+        ) : null}
       </View>
       {/* cancel button, depending on whether the search bar is clicked or not */}
       {clicked && (

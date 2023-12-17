@@ -14,14 +14,14 @@ const getStyles = (isDarkMode) =>
       alignItems: 'center',
     },
     title: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: 'bold',
-      color: isDarkMode ? 'white' : colors.text,
+      color: isDarkMode ? 'white' : colors.secondary,
     },
     button: {
       width: '80%',
       height: 50,
-      backgroundColor: isDarkMode ? '#171717' : colors.secondary,
+      backgroundColor: colors.secondary,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 10,
@@ -29,7 +29,7 @@ const getStyles = (isDarkMode) =>
     buttonText: {
       fontSize: 16,
       fontWeight: 'bold',
-      color: isDarkMode ? colors.text : 'white',
+      color: 'white',
     },
   });
 

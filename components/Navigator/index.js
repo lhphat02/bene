@@ -21,7 +21,6 @@ import {
   SettingSceen,
 } from '../../screens';
 import theme from '../../constants/theme';
-import { SafeAreaView } from 'react-native-web';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -73,7 +72,7 @@ const NotificationStack = () => {
           backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
         headerTitleAlign: 'center',
-        headerTintColor: isDarkMode ? '#fff' : '#000',
+        headerTintColor: isDarkMode ? colors.tertiary : '#000',
       }}
     >
       <Stack.Screen
@@ -105,7 +104,7 @@ const ProfileStack = () => {
           backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
         headerTitleAlign: 'center',
-        headerTintColor: isDarkMode ? '#fff' : '#000',
+        headerTintColor: isDarkMode ? colors.tertiary : '#000',
       }}
     >
       <Stack.Screen
@@ -176,19 +175,14 @@ const AccomdtStack = () => {
     <Stack.Navigator
       initialRouteName="Search"
       screenOptions={{
+        headerShown: false,
         headerStyle: {
           backgroundColor: isDarkMode ? '#413F42' : '#fff',
         },
         headerTintColor: isDarkMode ? '#fff' : '#000',
       }}
     >
-      <Stack.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="Search" component={SearchScreen} options={{}} />
       <Stack.Screen
         name="AccomdtList"
         component={AccomdtListScreen}
@@ -289,7 +283,9 @@ const MainBottom = () => {
                   ? isDarkMode
                     ? colors.tertiary
                     : colors.primary
-                  : darkColors.tertiary
+                  : isDarkMode
+                  ? darkColors.tertiary
+                  : colors.tertiary
               }
               size={size}
             />
@@ -310,7 +306,9 @@ const MainBottom = () => {
                   ? isDarkMode
                     ? colors.tertiary
                     : colors.primary
-                  : darkColors.tertiary
+                  : isDarkMode
+                  ? darkColors.tertiary
+                  : colors.tertiary
               }
               size={size}
             />
@@ -330,7 +328,9 @@ const MainBottom = () => {
                   ? isDarkMode
                     ? colors.tertiary
                     : colors.primary
-                  : darkColors.tertiary
+                  : isDarkMode
+                  ? darkColors.tertiary
+                  : colors.tertiary
               }
               size={size}
             />
@@ -350,7 +350,9 @@ const MainBottom = () => {
                   ? isDarkMode
                     ? colors.tertiary
                     : colors.primary
-                  : darkColors.tertiary
+                  : isDarkMode
+                  ? darkColors.tertiary
+                  : colors.tertiary
               }
               size={size}
             />

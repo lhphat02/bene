@@ -4,6 +4,7 @@ import Divider from './Divider';
 import AccomdtCard from './AccomdtCard';
 import NotiTab from './NotificationTab';
 import SearchBar from './SearchBar';
+import SettingToggle from './SettingToggle';
 
 import { AuthStack, MainBottom } from './Navigator';
 
@@ -16,4 +17,5 @@ export {
   AccomdtCard,
   NotiTab,
   SearchBar,
+  SettingToggle,
 };
