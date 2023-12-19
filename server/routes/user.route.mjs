@@ -1,9 +1,11 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";
-import User from "../model/user.mjs";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
+
+import User from "../model/user.mjs";
+import createToken from "../middleware/createToken.mjs";
 
 const router = express.Router();
 // const db = mongoose.connection;
@@ -21,6 +23,25 @@ router.get("/getAllUsers", async (req, res) => {
     res.status(500).send({
       resultCode: -1,
       message: "Get all users failed",
+      data: null,
+    });
+  }
+});
+
+router.get("/getUserById", async (req, res) => {
+  try {
+    let collection = await db.collection("users");
+    const query = { _id: new ObjectId(req.body.user_id) };
+    let results = await collection.findOne(query);
+    res.status(200).send({
+      resultCode: 1,
+      message: "Get user by id successfully",
+      data: results,
+    });
+  } catch (error) {
+    res.status(500).send({
+      resultCode: -1,
+      message: "Get user by id failed",
       data: null,
     });
   }
@@ -73,7 +94,6 @@ router.post("/createUser", async (req, res) => {
         data: newUser,
       });
     }
-    // Save the new user to the database
   } catch (error) {
     console.error(error);
     res.status(500).send({
@@ -90,7 +110,8 @@ router.post("/login", async (req, res) => {
     const user = await collection.findOne({ username: req.body.username });
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        // user.token = createToken(user._id);
+        user.token = createToken(user._id);
+
         res.status(200).send({
           resultCode: 1,
           message: "Login successfully",
@@ -103,6 +124,8 @@ router.post("/login", async (req, res) => {
         });
       }
     }
+    console.log("user:", user);
+    return user;
   } catch (error) {
     console.error("Login Failed:", error);
     res.status(500).send({
