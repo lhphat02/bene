@@ -1,29 +1,29 @@
 import jwt from "jsonwebtoken";
 
 const verifyToken = (req, res, next) => {
-  const tokenHeader = req.header("Authorization");
-
-  if (!tokenHeader) {
+  const token = req.headers.authorization;
+  console.log("token:", token);
+  if (!token) {
     return res.status(401).send({
       resultCode: -1,
       message: "Unauthorized: Token not provided",
+      data: null,
     });
   }
 
-  const token = tokenHeader.replace("Bearer ", "");
+  jwt.verify(token, "your_secret_key", (error, decoded) => {
+    if (error) {
+      console.error("Token Verification Error:", error);
+      return res.status(401).send({
+        resultCode: -1,
+        message: "Unauthorized: Invalid token",
+        data: null,
+      });
+    }
 
-  try {
-    const decoded = jwt.verify(token, "my secret key");
     req.user = decoded;
     next();
-  } catch (error) {
-    console.error("Token verification failed:", error);
-    return res.status(401).send({
-      resultCode: -1,
-      message: "Unauthorized: Invalid token",
-      token: token,
-    });
-  }
+  });
 };
 
 export default verifyToken;

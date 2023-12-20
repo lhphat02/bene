@@ -3,23 +3,32 @@ import db from "../db/conn.mjs";
 import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
 import Property from "../model/property.mjs";
+import verifyToken from "../middleware/createToken.mjs";
 
 const router = express.Router();
-// const db = mongoose.connection;
 
-router.get("/getAllProperties", async (req, res) => {
+router.get("/getAllProperties", verifyToken, async (req, res) => {
   try {
-    let collection = await db.collection("property");
-    let results = await collection.find({}).toArray();
-    res.status(200).send({
-      resultCode: 1,
-      message: "Get all Property successfully",
-      data: results,
-    });
+    if (verifyToken) {
+      let collection = await db.collection("property");
+      let results = await collection.find({}).toArray();
+
+      res.status(200).send({
+        resultCode: 1,
+        message: "Get all Properties successfully",
+        data: results,
+      });
+    } else {
+      res.status(401).send({
+        resultCode: -1,
+        message: "Unauthorized: Token not provided",
+      });
+    }
   } catch (error) {
+    console.error("Get all Properties failed:", error);
     res.status(500).send({
       resultCode: -1,
-      message: "Get all Property failed",
+      message: "Get all Properties failed",
       data: null,
     });
   }
