@@ -50,8 +50,11 @@ router.post('/createNotification', async (req, res) => {
     const newNotification = new Notification(req.body);
     if (
       req.body.user_id == null ||
-      req.body.message == null ||
-      req.body.time_stamp == null
+      req.body.sender_id == null ||
+      req.body.receiver_id == null ||
+      req.body.booking_id == null ||
+      req.body.message == null
+      // req.body.time_stamp == null
     ) {
       res.status(500).send({
         resultCode: -1,

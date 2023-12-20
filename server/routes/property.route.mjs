@@ -25,6 +25,50 @@ router.get('/getAllProperties', async (req, res) => {
   }
 });
 
+router.get('/getPropertiesByName', async (req, res) => {
+  try {
+    const property_name = req.body.property_name;
+    let collection = await db.collection('property');
+    let results = await collection
+      .find({ property_name: { $regex: new RegExp(property_name, 'i') } })
+      .toArray();
+    res.status(200).send({
+      resultCode: 1,
+      message: 'Get Property successfully',
+      data: results,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      resultCode: -1,
+      message: 'Get Property failed',
+      data: null,
+    });
+  }
+});
+
+router.get('/getPropertiesByName', async (req, res) => {
+  try {
+    const property_name = req.body.property_name;
+    let collection = await db.collection('property');
+    let results = await collection
+      .find({ property_name: { $regex: new RegExp(property_name, 'i') } })
+      .toArray();
+    res.status(200).send({
+      resultCode: 1,
+      message: 'Get Property successfully',
+      data: results,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      resultCode: -1,
+      message: 'Get Property failed',
+      data: null,
+    });
+  }
+});
+
 router.post('/createProperty', async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
