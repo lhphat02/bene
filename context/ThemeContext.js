@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react';
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [fontSize, setFontSize] = useState(16);
 
   const theme = {

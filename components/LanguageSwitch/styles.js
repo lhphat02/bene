@@ -1,7 +1,10 @@
 import { StyleSheet } from 'react-native';
+import theme from '../../constants/theme';
+
+const { colors } = theme;
 
 //20520683 - Luu Huynh Phat
-const getStyles = (isDarkMode, colors) =>
+const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
       padding: 10,
@@ -11,14 +14,14 @@ const getStyles = (isDarkMode, colors) =>
       alignItems: 'center',
     },
     title: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: 'bold',
-      color: isDarkMode ? 'white' : colors.text,
+      color: isDarkMode ? 'white' : colors.secondary,
     },
     button: {
       width: '80%',
       height: 50,
-      backgroundColor: isDarkMode ? '#171717' : colors.secondary,
+      backgroundColor: colors.secondary,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 10,
@@ -26,7 +29,7 @@ const getStyles = (isDarkMode, colors) =>
     buttonText: {
       fontSize: 16,
       fontWeight: 'bold',
-      color: isDarkMode ? colors.text : 'white',
+      color: 'white',
     },
   });
 

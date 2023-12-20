@@ -6,11 +6,8 @@ import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
 
 const LanguageSwitch = () => {
-  const {
-    theme: { colors },
-    isDarkMode,
-  } = useContext(ThemeContext);
-  const styles = getStyles(isDarkMode, colors);
+  const { isDarkMode } = useContext(ThemeContext);
+  const styles = getStyles(isDarkMode);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);

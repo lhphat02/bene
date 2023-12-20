@@ -11,6 +11,7 @@
   },
   "home": {
     "explore": "Khám phá",
+    "welcomeMessage": "Chào mừng đến với BENE!",
     "featuredProperties": "Các căn hộ nổi bật",
     "popularDestinations": "Điểm đến phổ biến",
     "searchPlaceholder": "Tìm kiếm địa điểm, căn hộ..."
@@ -32,7 +33,7 @@
     "accommodationTypes": "Loại chỗ ở",
     "priceRange": "Phạm vi giá",
     "price": "Giá",
-    
+
     "description": "Mô tả",
     "overview": "Tổng quan",
     "amenities": "Tiện nghi",

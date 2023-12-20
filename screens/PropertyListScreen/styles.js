@@ -1,41 +1,51 @@
 import { StyleSheet } from 'react-native';
+import theme from '../../constants/theme';
 
-//20520683 - Luu Huynh Phat
-const getStyles = (isDarkMode, fontSize) =>
+const { colors, darkColors } = theme;
+
+const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
       flex: 1,
+      gap: 20,
+      alignItems: 'center',
+      padding: 10,
+      overflow: 'visible',
+
+      backgroundColor: isDarkMode ? darkColors.background : 'white',
+    },
+    button: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
       gap: 10,
-      paddingHorizontal: 20,
-      backgroundColor: isDarkMode ? '#171717' : '#fff',
+      padding: 10,
+      borderRadius: 10,
+      backgroundColor: colors.primary,
+    },
+    button_text: {
+      fontSize: 16,
+      fontWeight: '900',
+      color: isDarkMode ? 'white' : 'black',
     },
     header: {
-      fontSize: fontSize + 4 || 24,
+      fontSize: 24,
       fontWeight: '900',
       textAlign: 'center',
       marginTop: 50,
-      color: 'orange',
+      color: colors.tertiary,
+    },
+    list: {
+      width: '100%',
+      flex: 1,
+      overflow: 'visible',
     },
     text: {
       marginTop: 20,
       textAlign: 'center',
-      fontSize: fontSize || 16,
+      fontSize: 16,
       color: isDarkMode ? 'white' : 'gray',
-    },
-    addTaskBar: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      // marginHorizontal: 20,
-    },
-    title: {
-      fontSize: fontSize + 8 || 20,
-      fontWeight: '600',
-      color: isDarkMode ? 'white' : 'gray',
-    },
-    taskList: {
-      flex: 1,
-      marginTop: 10,
     },
   });
 
