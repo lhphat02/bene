@@ -7,19 +7,19 @@ const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      gap: 20,
+      gap: 10,
       alignItems: 'center',
-      padding: 10,
+      justifyContent: 'space-between',
+      padding: 20,
       overflow: 'visible',
 
       backgroundColor: isDarkMode ? darkColors.background : 'white',
     },
     header: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: '900',
       textAlign: 'center',
-      marginTop: 50,
-      color: colors.tertiary,
+      color: isDarkMode ? 'white' : colors.primary,
     },
     list: {
       width: '100%',
@@ -27,7 +27,6 @@ const getStyles = (isDarkMode) =>
       overflow: 'visible',
     },
     text: {
-      marginTop: 20,
       textAlign: 'center',
       fontSize: 16,
       color: isDarkMode ? 'white' : 'gray',

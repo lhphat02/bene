@@ -29,6 +29,7 @@ const getStyles = (isDarkMode) =>
       width: '100%',
       fontSize: 16,
       backgroundColor: isDarkMode ? '#444444' : colors.background,
+      color: isDarkMode ? 'white' : 'black',
       padding: 16,
       borderRadius: 5,
       borderWidth: 1,

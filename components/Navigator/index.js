@@ -36,7 +36,7 @@ const AuthStack = () => {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        // headerShown: false,
+        headerTitleAlign: 'center',
         headerStyle: {
           backgroundColor: isDarkMode ? '#413F42' : '#fff',
         },
@@ -47,6 +47,7 @@ const AuthStack = () => {
         name="Login"
         component={LoginScreen}
         options={{
+          headerShown: false,
           title: 'Login',
         }}
       />
@@ -137,6 +138,7 @@ const PropertyStack = () => {
     <Stack.Navigator
       initialRouteName="PropertyList"
       screenOptions={{
+        headerShown: false,
         headerStyle: {
           backgroundColor: isDarkMode ? '#413F42' : '#fff',
         },
@@ -146,9 +148,7 @@ const PropertyStack = () => {
       <Stack.Screen
         name="PropertyList"
         component={PropertyListScreen}
-        options={{
-          headerShown: false,
-        }}
+        options={{}}
       />
       <Stack.Screen
         name="AddProperty"
@@ -213,6 +213,7 @@ const AccomdtTopTab = () => {
     <TopTab.Navigator
       initialRouteName="AccomdtStack"
       screenOptions={{
+        headerShown: false,
         headerStyle: {
           backgroundColor: isDarkMode ? darkColors.primary : '#fff',
         },
@@ -231,14 +232,13 @@ const AccomdtTopTab = () => {
         component={AccomdtStack}
         options={{
           title: 'Find home',
-          headerShown: false,
         }}
       />
       <Stack.Screen
         name="PropertyStack"
         component={PropertyStack}
         options={{
-          title: 'Your homes',
+          title: 'Your properties',
         }}
       />
     </TopTab.Navigator>

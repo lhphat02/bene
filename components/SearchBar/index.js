@@ -4,6 +4,9 @@ import { Feather, Entypo } from '@expo/vector-icons';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import getStyles from './styles';
+import theme from '../../constants/theme';
+
+const { colors } = theme;
 
 const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -37,7 +40,7 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
           <Entypo
             name="cross"
             size={20}
-            color="black"
+            color={isDarkMode ? 'black' : 'white'}
             style={{ padding: 1 }}
             onPress={() => {
               setSearchPhrase('');
@@ -50,7 +53,7 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
         <View>
           <Button
             title="Cancel"
-            color="#d9dbda"
+            color={colors.primary}
             onPress={() => {
               Keyboard.dismiss();
               setClicked(false);

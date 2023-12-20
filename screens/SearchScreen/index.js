@@ -8,7 +8,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import AccomdtCard from '../../components/AccomdtCard';
 import mockHomeData from '../../constants/mock/mockHomeData';
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const { t } = useTranslation();
   const [searchPhrase, setSearchPhrase] = useState('');
@@ -26,7 +26,14 @@ const SearchScreen = () => {
       <View style={styles.list}>
         <FlatList
           data={mockHomeData}
-          renderItem={({ item }) => <AccomdtCard data={item} />}
+          renderItem={({ item }) => (
+            <AccomdtCard
+              data={item}
+              onCardClicked={() =>
+                navigation.navigate('AccomdtDetail', { data: item })
+              }
+            />
+          )}
           keyExtractor={(item) => item.id.toString()}
         />
       </View>

@@ -10,15 +10,14 @@ const getStyles = (isDarkMode, height, width) =>
       width: width || 80,
       borderRadius: 999,
       borderWidth: 4,
-      borderColor: colors.primary,
+      borderColor: isDarkMode ? colors.tertiary : colors.primary,
       justifyContent: 'center',
-      backgroundColor: isDarkMode ? '#171717' : 'white',
     },
     text: {
       fontSize: height * 0.25 || 20,
       fontWeight: '900',
       textAlign: 'center',
-      color: colors.primary,
+      color: isDarkMode ? colors.tertiary : colors.primary,
     },
   });
 

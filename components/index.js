@@ -6,11 +6,7 @@ import NotiTab from './NotificationTab';
 import SearchBar from './SearchBar';
 import SettingToggle from './SettingToggle';
 
-import { AuthStack, MainBottom } from './Navigator';
-
 export {
-  AuthStack,
-  MainBottom,
   LanguageSwitch,
   Logo,
   Divider,

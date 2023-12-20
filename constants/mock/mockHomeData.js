@@ -6,26 +6,29 @@ const mockHomeData = [
     price_per_night: '$899',
     bedrooms: 2,
     bed_count: 4,
-    type: 'villa',
+    type: 'Villa',
     size: '4000 sqft',
     long_lat: '25.7617, 80.1918',
     address: '1234 Main Street, Miami, FL 33101',
     image_url:
       'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    rating: 4.5,
   },
   {
     id: 2,
     property_name: 'Phat House',
-    description: 'Super villa personally designed for Phat',
+    description:
+      'Veniam commodo Lorem exercitation dolore quis anim id mollit nostrud reprehenderit amet proident. Fugiat ipsum incididunt ut anim laborum. Dolor culpa deserunt culpa labore. Occaecat tempor officia commodo laboris elit velit. Magna enim fugiat consectetur eiusmod incididunt aute consequat id et cupidatat magna.',
     price_per_night: '$559',
     bedrooms: 2,
     bed_count: 3,
-    type: 'villa',
+    type: 'Villa',
     size: '3200 sqft',
     long_lat: '37.7749, 122.4194',
     address: '8900 Main Street, San Francisco, CA 94101',
     image_url:
       'https://images.unsplash.com/photo-1597211833712-5e41faa202ea?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    rating: 5.0,
   },
   {
     id: 3,
@@ -34,12 +37,13 @@ const mockHomeData = [
     price_per_night: '$300',
     bedrooms: 1,
     bed_count: 2,
-    type: 'tree_house',
+    type: 'Tree House',
     size: '1200 sqft',
     long_lat: '40.7128, -74.0060',
     address: '5678 Elm Street, New York, NY 10001',
     image_url:
       'https://images.unsplash.com/photo-1550355191-aa8a80b41353?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    rating: 3.2,
   },
   {
     id: 4,
@@ -48,12 +52,13 @@ const mockHomeData = [
     price_per_night: '$50,000',
     bedrooms: 20,
     bed_count: 20,
-    type: 'castle',
+    type: 'Castle',
     size: '8000 sqft',
     long_lat: '41.9028, 12.4964',
     address: '5678 Castle Road, Rome, Italy',
     image_url:
       'https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    rating: 4,
   },
   {
     id: 5,
@@ -62,27 +67,29 @@ const mockHomeData = [
     price_per_night: '$70',
     bedrooms: 2,
     bed_count: 3,
-    type: 'normal',
+    type: 'Normal House',
     size: '1800 sqft',
     long_lat: '37.7749, -122.4194',
     address: '1234 Elm Street, San Francisco, CA 94101',
     image_url:
       'https://images.unsplash.com/photo-1598228723793-52759bba239c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    rating: 4.8,
   },
   {
     id: 6,
     property_name: 'Mini Homestay',
     description:
-      'Cozy homestay with a beautiful garden and peaceful surroundings',
+      'Pariatur aliquip reprehenderit ut tempor do laborum ut commodo aliqua sunt consequat labore esse esse. Quis duis nulla aute aliqua officia eiusmod dolor non occaecat consectetur anim aliqua excepteur. Velit eiusmod sit id in minim dolor magna consequat. Velit aliqua minim excepteur mollit excepteur mollit ipsum dolor consectetur do pariatur proident irure incididunt.',
     price_per_night: '$29',
     bedrooms: 1,
     bed_count: 1,
-    type: 'homestay',
+    type: 'Homestay',
     size: '800 sqft',
     long_lat: '40.7128, -74.0060',
     address: '5678 Elm Street, New York, NY 10001',
     image_url:
       'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    rating: 4.6,
   },
 ];
 

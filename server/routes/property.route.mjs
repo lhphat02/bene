@@ -1,31 +1,31 @@
-import express from "express";
-import db from "../db/conn.mjs";
-import mongoose from "mongoose";
-import { ObjectId } from "mongodb";
-import Property from "../model/property.mjs";
+import express from 'express';
+import db from '../db/conn.mjs';
+import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
+import Property from '../model/property.mjs';
 
 const router = express.Router();
 // const db = mongoose.connection;
 
-router.get("/getAllProperties", async (req, res) => {
+router.get('/getAllProperties', async (req, res) => {
   try {
-    let collection = await db.collection("property");
+    let collection = await db.collection('property');
     let results = await collection.find({}).toArray();
     res.status(200).send({
       resultCode: 1,
-      message: "Get all Property successfully",
+      message: 'Get all Property successfully',
       data: results,
     });
   } catch (error) {
     res.status(500).send({
       resultCode: -1,
-      message: "Get all Property failed",
+      message: 'Get all Property failed',
       data: null,
     });
   }
 });
 
-router.post("/createProperty", async (req, res) => {
+router.post('/createProperty', async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
 
@@ -64,16 +64,16 @@ router.post("/createProperty", async (req, res) => {
     ) {
       res.status(500).send({
         resultCode: -1,
-        message: "Data cannot be empty",
+        message: 'Data cannot be empty',
         data: null,
       });
     } else {
-      let collection = await db.collection("property");
+      let collection = await db.collection('property');
       const result = await collection.insertOne(newProperty);
 
       res.status(201).send({
         resultCode: 1,
-        message: "Property created successfully",
+        message: 'Property created successfully',
         data: newProperty,
       });
     }
@@ -82,13 +82,13 @@ router.post("/createProperty", async (req, res) => {
 
     res.status(500).send({
       resultCode: -1,
-      message: "Failed to create property",
+      message: 'Failed to create property',
       data: result,
     });
   }
 });
 
-router.post("/editProperty", async (req, res) => {
+router.post('/editProperty', async (req, res) => {
   try {
     const {
       property_id,
@@ -122,41 +122,41 @@ router.post("/editProperty", async (req, res) => {
       },
     };
 
-    const collection = await db.collection("property");
+    const collection = await db.collection('property');
     const result = await collection.updateOne(query, editProperty);
 
     res.status(200).send({
       resultCode: 1,
-      message: "Property updated successfully",
+      message: 'Property updated successfully',
       data: result,
     });
   } catch (error) {
-    console.error("Error in updateProperty:", error);
+    console.error('Error in updateProperty:', error);
     res.status(500).send({
       resultCode: -1,
-      message: "Failed to update property",
+      message: 'Failed to update property',
       data: null,
     });
   }
 });
 
-router.post("/deleteProperty", async (req, res) => {
+router.post('/deleteProperty', async (req, res) => {
   try {
     const { property_id } = req.body;
     const query = { _id: new ObjectId(property_id) };
-    const collection = await db.collection("property");
+    const collection = await db.collection('property');
     const result = await collection.deleteOne(query);
 
     res.status(200).send({
       resultCode: 1,
-      message: "Property deleted successfully",
+      message: 'Property deleted successfully',
       data: result,
     });
   } catch (error) {
-    console.error("Error in deleteProperty:", error);
+    console.error('Error in deleteProperty:', error);
     res.status(500).send({
       resultCode: -1,
-      message: "Failed to delete property",
+      message: 'Failed to delete property',
       data: null,
     });
   }

@@ -52,6 +52,13 @@ const getStyles = (isDarkMode) =>
       height: 200,
       width: '100%',
     },
+    rating: {
+      fontSize: 20,
+      fontWeight: '900',
+      textAlign: 'center',
+      color: isDarkMode ? colors.tertiary : colors.primary,
+      marginTop: 10,
+    },
     description: {
       fontSize: 20,
       marginVertical: 10,

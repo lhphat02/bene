@@ -33,6 +33,7 @@ const getStyles = (isDarkMode) =>
       fontSize: 20,
       marginLeft: 10,
       width: '90%',
+      color: isDarkMode ? 'black' : 'white',
     },
   });
 

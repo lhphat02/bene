@@ -1,26 +1,20 @@
 import { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { ThemeContext } from '../../context/ThemeContext';
 import { shortener } from '../../utils/formatter';
 import getStyles from './styles';
 
-const AccomdtCard = ({ data }) => {
+const AccomdtCard = ({ data, onCardClicked }) => {
   const { isDarkMode } = useContext(ThemeContext);
-  const navigation = useNavigation();
   const styles = getStyles(isDarkMode);
 
   const shortTitle = shortener(data?.property_name, 30);
   const shortAddress = shortener(data?.address, 50);
   const shortDescription = shortener(data?.description, 50);
 
-  const handleCardPress = () => {
-    navigation.navigate('AccomdtDetail', { data });
-  };
-
   return (
-    <TouchableOpacity style={styles.container} onPress={handleCardPress}>
+    <TouchableOpacity style={styles.container} onPress={onCardClicked}>
       <Image
         style={styles.image}
         source={

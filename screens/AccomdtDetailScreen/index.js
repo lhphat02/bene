@@ -39,6 +39,8 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
         />
         <Text style={styles.header}>{data?.property_name || 'House'}</Text>
 
+        <Text style={styles.rating}>Rating: {data?.rating || '5'}</Text>
+
         <Text style={styles.description}>
           {data?.description || 'Description'}
         </Text>
