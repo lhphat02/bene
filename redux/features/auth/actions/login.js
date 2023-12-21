@@ -1,47 +1,51 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { storeLocalData } from '../../../../utils/helper/user';
 
 const login = createAsyncThunk(
   'auth/login',
   async (data, { rejectWithValue }) => {
     try {
-      console.log('login');
-      console.log('data', data);
+      console.log('\x1b[33m LOGIN WITH DATA: \x1b[0m', data);
 
-      const response = await fetch('http://localhost:5050/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      // Make the API call
+      const response = await axios.post(
+        'http://192.168.1.10:5050/users/login',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      console.log('response', response);
+      // Get the JSON response body
+      const responseData = response.data;
 
-      const responseData = await response.json();
+      // Log the response
+      console.log('\x1b[33m RESPONSE: \x1b[0m', responseData);
 
-      console.log('responseData', responseData);
-
-      if (!response.resultCode) {
+      // If the response contains an error code, reject the thunk with the error message
+      if (!responseData.resultCode) {
+        console.log('\x1b[33m LOGIN FAILED \x1b[0m');
         return rejectWithValue(responseData);
       }
 
+      // Store the user_id in AsyncStorage
+      await storeLocalData('userId', responseData.data._id);
+
+      // Store the token in AsyncStorage
+      await storeLocalData('token', responseData.data.token);
+
+      console.log('\x1b[33m LOGIN SUCCESS! \x1b[0m');
+
+      // Return the response data
       return responseData;
     } catch (error) {
-      console.error('Error during fetch:', error);
-      // Extract only the necessary information from the error
+      // Log the error
+      console.error('\x1b[33m LOGIN ERROR: \x1b[0m', error);
       return rejectWithValue(error.message || 'An error occurred');
     }
-  }
-);
-
-export const loginStatic = (user) => (
-  {
-    type: 'auth/loginStatic',
-    payload: user,
-  },
-  () => {
-    console.log('loginStatic');
-    console.log('user', user);
   }
 );
 

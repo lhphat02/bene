@@ -13,10 +13,13 @@ import property_type from './routes/property_type.route.mjs';
 const PORT = process.env.PORT || 5051;
 const app = express();
 
+const expoDevServerUrl = 'http://192.168.1.10:8081';
+
 app.use(
   cors({
-    origin: 'http://localhost:8081',
-    credentials: true, // If you are using cookies or authentication
+    origin: [expoDevServerUrl],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
   })
 );
 

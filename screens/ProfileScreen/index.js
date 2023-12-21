@@ -4,7 +4,7 @@ import { View, Text, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 
-import { logout } from '../../redux/features/auth/reducers/authSlice';
+import logout from '../../redux/features/auth/actions/logout';
 import { ThemeContext } from '../../context/ThemeContext';
 import getStyles from './styles';
 

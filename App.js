@@ -12,6 +12,8 @@ import { enTranslation, viTranslation } from './constants/translations';
 import { ThemeProvider } from './context/ThemeContext';
 import { StatusBar } from 'react-native';
 import store from './redux/store';
+import ErrorDisplayer from './components/ErrorDisplayer';
+import Loading from './components/Loading';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -31,6 +33,11 @@ i18n.use(initReactI18next).init({
 
 const AppContent = () => {
   const token = useSelector((state) => state.auth.token);
+  const loading = useSelector((state) => state.auth.loading);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <ThemeProvider>

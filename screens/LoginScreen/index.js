@@ -8,8 +8,7 @@ import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
 import Logo from '../../components/Logo';
 import Divider from '../../components/Divider';
-import login, { loginStatic } from '../../redux/features/auth/actions/login';
-import { loginSuccess } from '../../redux/features/auth/reducers/authSlice';
+import login from '../../redux/features/auth/actions/login';
 
 const LoginScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -23,12 +22,9 @@ const LoginScreen = ({ navigation }) => {
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
 
-  console.log('user', user);
-
   const styles = getStyles(isDarkMode);
 
   const handleLogin = () => {
-    // dispatch(loginSuccess({ username: 'admin', token: '123' }));
     dispatch(login({ username: 'quantest1', password: 'a' }));
   };
 
