@@ -1,47 +1,42 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (data, { rejectWithValue }) => {
     try {
-      console.log('login');
-      console.log('data', data);
+      console.log("login");
+      console.log("data", data);
 
-      const response = await fetch('http://localhost:5050/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = fetch("http://localhost:5050/users/login", data);
 
-      console.log('response', response);
+      console.log("response", response);
 
-      const responseData = await response.json();
+      // const responseData = await response.json();
 
-      console.log('responseData', responseData);
+      // console.log("responseData", responseData);
 
-      if (!response.resultCode) {
-        return rejectWithValue(responseData);
-      }
+      // if (!response.resultCode) {
+      //   return rejectWithValue(responseData);
+      // }
 
-      return responseData;
+      // return responseData;
     } catch (error) {
-      console.error('Error during fetch:', error);
+      console.error("Error during fetch:", error);
       // Extract only the necessary information from the error
-      return rejectWithValue(error.message || 'An error occurred');
+      return rejectWithValue(error.message || "An error occurred");
     }
   }
 );
 
 export const loginStatic = (user) => (
   {
-    type: 'auth/loginStatic',
+    type: "auth/loginStatic",
     payload: user,
   },
   () => {
-    console.log('loginStatic');
-    console.log('user', user);
+    console.log("loginStatic");
+    console.log("user", user);
   }
 );
 
