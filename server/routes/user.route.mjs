@@ -111,7 +111,13 @@ router.post("/login", async (req, res) => {
   try {
     const collection = await db.collection("users");
     const user = await collection.findOne({ username: req.body.username });
-    if (user) {
+    console.log("user:", user);
+    if (user === null) {
+      res.status(400).send({
+        resultCode: -1,
+        message: "User not found",
+      });
+    } else {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         user.token = createToken(user._id);
 
@@ -123,11 +129,10 @@ router.post("/login", async (req, res) => {
       } else {
         res.status(400).send({
           resultCode: -1,
-          message: "Login failed",
+          message: "Wrong password",
         });
       }
     }
-    console.log("user:", user);
     return user;
   } catch (error) {
     console.error("Login Failed:", error);
