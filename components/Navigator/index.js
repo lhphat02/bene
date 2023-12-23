@@ -9,6 +9,7 @@ import {
   AccomdtDetailScreen,
   AccomdtListScreen,
   AddPropertyScreen,
+  BookingScreen,
   HomeScreen,
   LoginScreen,
   NotificationDetailScreen,
@@ -195,6 +196,13 @@ const AccomdtStack = () => {
         component={AccomdtDetailScreen}
         options={{
           title: 'Accommodation detail',
+        }}
+      />
+      <Stack.Screen
+        name="Booking"
+        component={BookingScreen}
+        options={{
+          title: 'Booking',
         }}
       />
     </Stack.Navigator>

@@ -65,9 +65,12 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
         </Text>
       </ScrollView>
 
-      <TouchableOpacity style={styles.book_button} onPress={() => {}}>
-        <Ionicons name="create" size={24} color="white" />
-        <Text style={styles.book_button_text}>Edit Property</Text>
+      <TouchableOpacity
+        style={styles.book_button}
+        onPress={() => navigation.navigate('Booking', { data: data })}
+      >
+        <Ionicons name="calendar-sharp" size={24} color="white" />
+        <Text style={styles.book_button_text}>Book</Text>
       </TouchableOpacity>
     </View>
   );

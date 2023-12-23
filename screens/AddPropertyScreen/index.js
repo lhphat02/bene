@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   View,
-  FlatList,
   TouchableOpacity,
   Text,
   TextInput,
@@ -11,16 +10,50 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 
-import SearchBar from '../../components/SearchBar';
-import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
-import AccomdtCard from '../../components/AccomdtCard';
-import mockPropertyData from '../../constants/mock/mockPropertyData';
+import { getLocationFromAddress } from '../../utils/helper/location';
+import getStyles from './styles';
+
+const formInput = [
+  {
+    name: 'property_name',
+    placeholder: 'Property name',
+  },
+  {
+    name: 'description',
+    placeholder: 'Description',
+  },
+  {
+    name: 'address',
+    placeholder: 'Address',
+  },
+  {
+    name: 'price_per_night',
+    placeholder: 'Price per night',
+  },
+  {
+    name: 'max_guests',
+    placeholder: 'Max guests',
+  },
+  {
+    name: 'beds',
+    placeholder: 'Beds',
+  },
+  {
+    name: 'bedrooms',
+    placeholder: 'Bedrooms',
+  },
+  {
+    name: 'size',
+    placeholder: 'Size',
+  },
+];
 
 const PropertyListScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const { t } = useTranslation();
   const userId = useSelector((state) => state.auth.user_id);
+  const styles = getStyles(isDarkMode);
   const [formData, setFormData] = useState({
     user_id: userId,
     property_name: '',
@@ -35,7 +68,53 @@ const PropertyListScreen = ({ navigation }) => {
     availability: 0,
   });
 
-  const styles = getStyles(isDarkMode);
+  const handleInputChange = (name) => (text) => {
+    setFormData({ ...formData, [name]: text });
+  };
+
+  const handleGetLongLat = async () => {
+    const { address } = formData;
+    const longLat = await getLocationFromAddress(address);
+    console.log('longLat', longLat);
+    setFormData({ ...formData, long_lat: longLat });
+  };
+
+  console.log('Address', formData.address);
+
+  const handleCreateProperty = () => {
+    const {
+      user_id,
+      property_name,
+      description,
+      address,
+      price_per_night,
+      max_guests,
+      beds,
+      bedrooms,
+      size,
+      long_lat,
+      availability,
+    } = formData;
+
+    if (
+      !user_id ||
+      !property_name ||
+      !description ||
+      !address ||
+      !price_per_night ||
+      !max_guests ||
+      !beds ||
+      !bedrooms ||
+      !size ||
+      !long_lat ||
+      !availability
+    ) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    dispatch(createProperty(formData));
+  };
 
   console.log('userId', userId);
 
@@ -55,77 +134,17 @@ const PropertyListScreen = ({ navigation }) => {
         <Text style={styles.title}>Add new property</Text>
       </View>
       <ScrollView style={styles.list} contentContainerStyle={styles.form}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Property name"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) =>
-            setFormData({ ...formData, property_name: text })
-          }
-          value={formData.property_name}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Description"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) =>
-            setFormData({ ...formData, description: text })
-          }
-          value={formData.description}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Address"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) => setFormData({ ...formData, address: text })}
-          value={formData.address}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Price per night"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) =>
-            setFormData({ ...formData, price_per_night: text })
-          }
-          value={formData.price_per_night}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Max guests"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) =>
-            setFormData({ ...formData, max_guests: text })
-          }
-          value={formData.max_guests}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Beds"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) => setFormData({ ...formData, beds: text })}
-          value={formData.beds}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Bedrooms"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) => setFormData({ ...formData, bedrooms: text })}
-          value={formData.bedrooms}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Size"
-          placeholderTextColor={isDarkMode ? 'white' : 'black'}
-          onChangeText={(text) => setFormData({ ...formData, size: text })}
-          value={formData.size}
-        />
+        {formInput.map((item, index) => (
+          <TextInput
+            key={index}
+            style={styles.textInput}
+            placeholder={item.placeholder}
+            placeholderTextColor={isDarkMode ? 'white' : 'black'}
+            onChangeText={handleInputChange(item.name)}
+          />
+        ))}
       </ScrollView>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.navigate('AddProperty');
-        }}
-      >
+      <TouchableOpacity style={styles.button} onPress={handleGetLongLat}>
         <Ionicons name="add" size={24} color="white" />
         <Text style={styles.button_text}>Create</Text>
       </TouchableOpacity>

@@ -1,7 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 import { useTranslation } from 'react-i18next';
 import getStyles from './styles';
