@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import express from "express";
 import db from "../db/conn.mjs";
 import mongoose from "mongoose";

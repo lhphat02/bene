@@ -14,19 +14,15 @@ import property_type from "./routes/property_type.route.mjs";
 const PORT = process.env.PORT || 5051;
 const app = express();
 
-<<<<<<< HEAD
-app.use(cors());
-=======
-const expoDevServerUrl = 'http://192.168.1.10:8081';
+const expoDevServerUrl = "http://192.168.1.10:8081";
 
 app.use(
   cors({
     origin: [expoDevServerUrl],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
->>>>>>> 3f429d6b911a412a8d443984b3636cd6ad17e8e2
 
 app.use(express.json());
 
