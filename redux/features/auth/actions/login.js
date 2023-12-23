@@ -48,5 +48,4 @@ const login = createAsyncThunk(
     }
   }
 );
-
 export default login;
