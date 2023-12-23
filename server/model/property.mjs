@@ -42,6 +42,10 @@ const propertySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  images: {
+    type: String,
+    required: true,
+  },
   availability: {
     type: Number,
     default: 1,
