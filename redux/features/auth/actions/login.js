@@ -37,14 +37,14 @@ const login = createAsyncThunk(
       // Store the token in AsyncStorage
       await storeLocalData('token', responseData.data.token);
 
-      console.log('\x1b[33m LOGIN SUCCESS! \x1b[0m');
+      console.log('\x1b[32m LOGIN SUCCESS! \x1b[0m');
 
       // Return the response data
       return responseData;
     } catch (error) {
       // Log the error
-      console.error('\x1b[33m LOGIN ERROR: \x1b[0m', error);
-      return rejectWithValue(error.message || 'An error occurred');
+      console.log('\x1b[31m LOGIN ERROR: \x1b[0m', error);
+      return rejectWithValue('Username or password is incorrect');
     }
   }
 );

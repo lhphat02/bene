@@ -1,24 +1,26 @@
 import axios from 'axios';
 
-const path = 'http://localhost:5050/';
-
-const CONSTANTS = {
+export const CONSTANTS = {
+  PATH: {
+    HOME: 'http://192.168.1.10:5050/',
+    KAI: 'http://192.168.0.98:5050/',
+  },
   API: {
     USER: {
-      LOGIN: `${path}/users/login`,
-      REGISTER: `${path}/users/createUser`,
+      LOGIN: `${CONSTANTS.PATH.HOME}/users/login`,
+      REGISTER: `${CONSTANTS.PATH.HOME}/users/createUser`,
     },
     PROPERTY: {
-      CREATE: `${path}/property/createProperty`,
-      GET_ALL: `${path}/property/getAllProperties`,
-      EDIT: `${path}/property/editProperty`,
-      DELETE: `${path}/property/deleteProperty`,
+      CREATE: `${CONSTANTS.PATH.HOME}/property/createProperty`,
+      GET_ALL: `${CONSTANTS.PATH.HOME}/property/getAllProperties`,
+      EDIT: `${CONSTANTS.PATH.HOME}/property/editProperty`,
+      DELETE: `${CONSTANTS.PATH.HOME}/property/deleteProperty`,
     },
     BOOKING: {
-      CREATE: `${path}/booking/createBooking`,
-      GET_ALL: `${path}/booking/getAllBookings`,
-      UPDATE: `${path}/booking/updateBooking`,
-      DELETE: `${path}/booking/deleteBooking`,
+      CREATE: `${CONSTANTS.PATH.HOME}/booking/createBooking`,
+      GET_ALL: `${CONSTANTS.PATH.HOME}/booking/getAllBookings`,
+      UPDATE: `${CONSTANTS.PATH.HOME}/booking/updateBooking`,
+      DELETE: `${CONSTANTS.PATH.HOME}/booking/deleteBooking`,
     },
   },
   FUNCTIONS: {
@@ -117,5 +119,3 @@ const CONSTANTS = {
     },
   },
 };
-
-export default CONSTANTS;

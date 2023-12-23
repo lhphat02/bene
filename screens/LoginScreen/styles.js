@@ -38,6 +38,8 @@ const getStyles = (isDarkMode) =>
     button: {
       width: '100%',
       height: 50,
+      flexDirection: 'row',
+      gap: 10,
       backgroundColor: colors.primary,
       justifyContent: 'center',
       alignItems: 'center',

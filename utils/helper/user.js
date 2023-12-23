@@ -52,3 +52,17 @@ export const removeLocalData = async (key) => {
     console.error(`Error removing ${key}: `, error);
   }
 };
+
+/**
+ * Removes all data from local storage.
+ * @returns {Promise<void>} - A promise that resolves when all data is removed successfully.
+ */
+export const clearLocalStorage = async () => {
+  try {
+    await AsyncStorage.clear()
+      .then(() => console.log('Local storage cleared'))
+      .catch((error) => console.error('Error clearing local storage: ', error));
+  } catch (error) {
+    console.error('Error clearing local storage: ', error);
+  }
+};

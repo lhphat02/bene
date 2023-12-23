@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 import { useTranslation } from 'react-i18next';
 import getStyles from './styles';
@@ -12,39 +18,61 @@ import login from '../../redux/features/auth/actions/login';
 
 const LoginScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
-  const navigator = useNavigation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const user = useSelector((state) => state.auth.user);
-  const token = useSelector((state) => state.auth.token);
+
+  const loading = useSelector((state) => state.auth.loading);
+  const error = useSelector((state) => state.auth.error);
 
   const styles = getStyles(isDarkMode);
 
-  const handleLogin = () => {
-    dispatch(login({ username: 'quantest1', password: 'a' }));
+  const handleInputChange = (name) => (text) => {
+    setFormData({ ...formData, [name]: text });
   };
+
+  const handleLogin = () => {
+    const { username, password } = formData;
+
+    if (!username || !password) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    dispatch(login(formData));
+  };
+
+  if (error) {
+    alert(error);
+  }
 
   return (
     <View style={styles.container}>
       <Logo width={120} height={120} />
-      {/* <Text style={styles.header}>Login</Text> */}
       <View style={styles.form}>
         <TextInput
           style={styles.textInput}
           placeholder="Username"
           placeholderTextColor={isDarkMode ? 'white' : 'black'}
+          onChangeText={handleInputChange('username')}
         />
         <TextInput
           style={styles.textInput}
           placeholder="Password"
           placeholderTextColor={isDarkMode ? 'white' : 'black'}
+          onChangeText={handleInputChange('password')}
+          secureTextEntry
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        disabled={loading}
+        onPress={handleLogin}
+      >
+        {loading && <ActivityIndicator size="small" color="white" />}
         <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
 
@@ -56,7 +84,6 @@ const LoginScreen = ({ navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Register')}
-        // onPress={() => console.log('user&token', user, token)}
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>

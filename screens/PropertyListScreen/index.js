@@ -38,7 +38,12 @@ const PropertyListScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate('AddProperty');
+        }}
+      >
         <Ionicons name="add" size={24} color="white" />
         <Text style={styles.button_text}>Add new property</Text>
       </TouchableOpacity>

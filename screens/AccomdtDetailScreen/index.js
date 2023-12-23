@@ -23,7 +23,6 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
           size={24}
           color={isDarkMode ? 'white' : 'black'}
         />
-        <Text style={styles.button_text}>Back</Text>
       </TouchableOpacity>
 
       <ScrollView>
@@ -67,7 +66,8 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
       </ScrollView>
 
       <TouchableOpacity style={styles.book_button} onPress={() => {}}>
-        <Text style={styles.book_button_text}>Book now</Text>
+        <Ionicons name="create" size={24} color="white" />
+        <Text style={styles.book_button_text}>Edit Property</Text>
       </TouchableOpacity>
     </View>
   );

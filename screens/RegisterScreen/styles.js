@@ -5,19 +5,23 @@ const { colors } = theme;
 
 const getStyles = (isDarkMode) =>
   StyleSheet.create({
+    keyboardAvoidingView: {
+      flex: 1,
+    },
     container: {
       flex: 1,
       gap: 20,
+      flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 20,
+      padding: 20,
       backgroundColor: isDarkMode ? '#171717' : 'white',
     },
     header: {
+      marginTop: 20,
       fontSize: 24,
       fontWeight: '900',
       textAlign: 'center',
-      marginTop: 50,
       color: isDarkMode ? 'white' : colors.primary,
     },
     form: {
@@ -28,6 +32,7 @@ const getStyles = (isDarkMode) =>
     textInput: {
       width: '100%',
       fontSize: 16,
+      color: isDarkMode ? 'white' : 'black',
       backgroundColor: isDarkMode ? '#444444' : colors.background,
       padding: 16,
       borderRadius: 5,
@@ -37,6 +42,8 @@ const getStyles = (isDarkMode) =>
     button: {
       width: '100%',
       height: 50,
+      flexDirection: 'row',
+      gap: 10,
       backgroundColor: colors.primary,
       justifyContent: 'center',
       alignItems: 'center',
