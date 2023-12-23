@@ -113,6 +113,7 @@ router.post("/createProperty", async (req, res) => {
       req.body.bedrooms == null ||
       req.body.size == null ||
       req.body.long_lat == null ||
+      req.body.image == null ||
       req.body.availability == null
     ) {
       res.status(500).send({
@@ -155,6 +156,7 @@ router.post("/editProperty", async (req, res) => {
       bedrooms,
       size,
       long_lat,
+      image,
       availability,
     } = req.body;
     console.log(req.body);
@@ -171,6 +173,7 @@ router.post("/editProperty", async (req, res) => {
         bedrooms,
         size,
         long_lat,
+        image,
         availability,
       },
     };
