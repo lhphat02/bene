@@ -7,12 +7,17 @@ import { useDispatch } from 'react-redux';
 import logout from '../../redux/features/auth/actions/logout';
 import { ThemeContext } from '../../context/ThemeContext';
 import getStyles from './styles';
+import useUserData from '../../hooks/useUser';
 
 const ProfileScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
+  const { user, loading, error } = useUserData();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const styles = getStyles(isDarkMode);
+
+  console.log('user in FE', user);
 
   const handleLogout = () => {
     dispatch(logout());

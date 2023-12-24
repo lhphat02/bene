@@ -16,7 +16,7 @@ const getStyles = (isDarkMode) =>
       fontWeight: '900',
       textAlign: 'center',
       marginTop: 20,
-      color: isDarkMode ? colors.tertiary : colors.primary,
+      color: isDarkMode ? 'white' : colors.primary,
     },
     back_button: {
       position: 'absolute',
