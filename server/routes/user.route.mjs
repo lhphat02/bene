@@ -3,6 +3,7 @@ import db from "../db/conn.mjs";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { ObjectId } from "mongodb";
+import { verifyToken } from "../middleware/verifyToken.mjs";
 
 import User from "../model/user.mjs";
 import createToken from "../middleware/createToken.mjs";
@@ -124,7 +125,16 @@ router.post("/login", async (req, res) => {
         res.status(200).send({
           resultCode: 1,
           message: "Login successfully",
-          data: user,
+          data: {
+            id: user._id,
+            username: user.username,
+            displayName: user.displayName,
+            phoneNumber: user.phoneNumber,
+            email: user.email,
+            deactivated: user.deactivated,
+            registration_date: user.registration_date,
+            token: user.token,
+          },
         });
       } else {
         res.status(400).send({
