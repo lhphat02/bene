@@ -1,30 +1,32 @@
-import express from 'express';
-import db from '../db/conn.mjs';
-import mongoose from 'mongoose';
-import Notification from '../model/notifications.mjs';
+import express from "express";
+import db from "../db/conn.mjs";
+import mongoose from "mongoose";
+import Notification from "../model/notifications.mjs";
+import { ObjectId } from "mongodb";
+import { verifyToken } from "../middleware/verifyToken.mjs";
 
 const router = express.Router();
 // const db = mongoose.connection;
 
-router.get('/getAllNotificaitons', async (req, res) => {
+router.get("/getAllNotificaitons", verifyToken, async (req, res) => {
   try {
-    let collection = await db.collection('notification');
+    let collection = await db.collection("notification");
     let results = await collection.find({}).toArray();
     res.status(200).send({
       resultCode: 1,
-      message: 'Get all notification successfully',
+      message: "Get all notification successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
       resultCode: -1,
-      message: 'Get all notification failed',
+      message: "Get all notification failed",
       data: null,
     });
   }
 });
 
-router.post('/createNotification', async (req, res) => {
+router.post("/createNotification", verifyToken, async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
 
@@ -58,16 +60,16 @@ router.post('/createNotification', async (req, res) => {
     ) {
       res.status(500).send({
         resultCode: -1,
-        message: 'Data cannot be empty',
+        message: "Data cannot be empty",
         data: null,
       });
     } else {
-      let collection = await db.collection('notification');
+      let collection = await db.collection("notification");
       const result = await collection.insertOne(newNotification);
 
       res.status(201).send({
         resultCode: 1,
-        message: 'Notification created successfully',
+        message: "Notification created successfully",
         data: newNotification,
       });
     }
@@ -75,8 +77,32 @@ router.post('/createNotification', async (req, res) => {
     console.error(error);
     res.status(500).send({
       resultCode: -1,
-      message: 'Failed to create Notification',
+      message: "Failed to create Notification",
       data: result,
+    });
+  }
+});
+
+router.get("/getNotificationById", verifyToken, async (req, res) => {
+  try {
+    const userId = req.query.user_id || 0;
+    const query = { user_id: userId };
+
+    let collection = await db.collection("notification");
+    let results = await collection.find(query).toArray();
+
+    console.log(results);
+
+    res.status(200).send({
+      resultCode: 1,
+      message: "Get notification by id successfully",
+      data: results,
+    });
+  } catch (error) {
+    res.status(500).send({
+      resultCode: -1,
+      message: "Get notification by id failed",
+      data: null,
     });
   }
 });

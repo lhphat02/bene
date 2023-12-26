@@ -3,27 +3,22 @@ import db from "../db/conn.mjs";
 import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
 import Property from "../model/property.mjs";
-import verifyToken from "../middleware/createToken.mjs";
+import { verifyToken } from "../middleware/verifyToken.mjs";
 
 const router = express.Router();
 
+// Your route file (e.g., getAllPropertiesRoute.mjs)
+
 router.get("/getAllProperties", verifyToken, async (req, res) => {
   try {
-    if (verifyToken) {
-      let collection = await db.collection("property");
-      let results = await collection.find({}).toArray();
+    let collection = await db.collection("property");
+    let results = await collection.find({}).toArray();
 
-      res.status(200).send({
-        resultCode: 1,
-        message: "Get all Properties successfully",
-        data: results,
-      });
-    } else {
-      res.status(401).send({
-        resultCode: -1,
-        message: "Unauthorized: Token not provided",
-      });
-    }
+    res.status(200).send({
+      resultCode: 1,
+      message: "Get all Properties successfully",
+      data: results,
+    });
   } catch (error) {
     console.error("Get all Properties failed:", error);
     res.status(500).send({
@@ -34,13 +29,19 @@ router.get("/getAllProperties", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/getPropertiesByName", async (req, res) => {
+router.get("/getPropertyBySearchphase", verifyToken, async (req, res) => {
   try {
     const property_name = req.body.property_name;
+    const address = req.body.address;
     let collection = await db.collection("property");
-    let results = await collection
+    let resultsByName = await collection
       .find({ property_name: { $regex: new RegExp(property_name, "i") } })
       .toArray();
+    let resultsByAddress = await collection
+      .find({ address: { $regex: new RegExp(address, "i") } })
+      .toArray();
+    let results = resultsByName.concat(resultsByAddress);
+
     res.status(200).send({
       resultCode: 1,
       message: "Get Property successfully",
@@ -56,29 +57,7 @@ router.get("/getPropertiesByName", async (req, res) => {
   }
 });
 
-router.get("/getPropertiesByName", async (req, res) => {
-  try {
-    const property_name = req.body.property_name;
-    let collection = await db.collection("property");
-    let results = await collection
-      .find({ property_name: { $regex: new RegExp(property_name, "i") } })
-      .toArray();
-    res.status(200).send({
-      resultCode: 1,
-      message: "Get Property successfully",
-      data: results,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({
-      resultCode: -1,
-      message: "Get Property failed",
-      data: null,
-    });
-  }
-});
-
-router.post("/createProperty", async (req, res) => {
+router.post("/createProperty", verifyToken, async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
 
@@ -142,7 +121,7 @@ router.post("/createProperty", async (req, res) => {
   }
 });
 
-router.post("/editProperty", async (req, res) => {
+router.post("/editProperty", verifyToken, async (req, res) => {
   try {
     const {
       property_id,
@@ -196,7 +175,7 @@ router.post("/editProperty", async (req, res) => {
   }
 });
 
-router.post("/deleteProperty", async (req, res) => {
+router.post("/deleteProperty", verifyToken, async (req, res) => {
   try {
     const { property_id } = req.body;
     const query = { _id: new ObjectId(property_id) };

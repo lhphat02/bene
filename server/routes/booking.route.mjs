@@ -1,31 +1,32 @@
-import express from 'express';
-import db from '../db/conn.mjs';
-import mongoose from 'mongoose';
-import Booking from '../model/booking.mjs';
-import { ObjectId } from 'mongodb';
+import express from "express";
+import db from "../db/conn.mjs";
+import mongoose from "mongoose";
+import Booking from "../model/booking.mjs";
+import { ObjectId } from "mongodb";
+import { verifyToken } from "../middleware/verifyToken.mjs";
 
 const router = express.Router();
 // const db = mongoose.connection;
 
-router.get('/getAllBookings', async (req, res) => {
+router.get("/getAllBookings", verifyToken, async (req, res) => {
   try {
-    let collection = await db.collection('booking');
+    let collection = await db.collection("booking");
     let results = await collection.find({}).toArray();
     res.status(200).send({
       resultCode: 1,
-      message: 'Get all booking successfully',
+      message: "Get all booking successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
       resultCode: -1,
-      message: 'Get all booking failed',
+      message: "Get all booking failed",
       data: null,
     });
   }
 });
 
-router.post('/createBooking', async (req, res) => {
+router.post("/createBooking", verifyToken, async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
 
@@ -61,16 +62,16 @@ router.post('/createBooking', async (req, res) => {
     ) {
       res.status(500).send({
         resultCode: -1,
-        message: 'Data cannot be empty',
+        message: "Data cannot be empty",
         data: null,
       });
     } else {
-      let collection = await db.collection('booking');
+      let collection = await db.collection("booking");
       const result = await collection.insertOne(newBooking);
 
       res.status(201).send({
         resultCode: 1,
-        message: 'Booking created successfully',
+        message: "Booking created successfully",
         data: newBooking,
       });
     }
@@ -78,13 +79,13 @@ router.post('/createBooking', async (req, res) => {
     console.error(error);
     res.status(500).send({
       resultCode: -1,
-      message: 'Failed to create Booking',
+      message: "Failed to create Booking",
       data: result,
     });
   }
 });
 
-router.post('/updateBooking', async (req, res) => {
+router.post("/updateBooking", verifyToken, async (req, res) => {
   try {
     const {
       booking_id,
@@ -109,18 +110,18 @@ router.post('/updateBooking', async (req, res) => {
     if (booking_id == null) {
       res.status(500).send({
         resultCode: -1,
-        message: 'Booking ID cannot be empty',
+        message: "Booking ID cannot be empty",
         data: null,
       });
     } else {
       const query = { _id: new ObjectId(booking_id) };
 
-      let collection = await db.collection('booking');
+      let collection = await db.collection("booking");
       const result = await collection.updateOne(query, booking);
 
       res.status(201).send({
         resultCode: 1,
-        message: 'Booking updated successfully',
+        message: "Booking updated successfully",
         data: result,
       });
     }
@@ -128,31 +129,31 @@ router.post('/updateBooking', async (req, res) => {
     console.error(error);
     res.status(500).send({
       resultCode: -1,
-      message: 'Failed to update booking',
+      message: "Failed to update booking",
       data: result,
     });
   }
 });
 
-router.post('/deleteBooking', async (req, res) => {
+router.post("/deleteBooking", verifyToken, async (req, res) => {
   try {
     const { booking_id } = req.body;
 
     if (booking_id == null) {
       res.status(500).send({
         resultCode: -1,
-        message: 'Booking ID cannot be empty',
+        message: "Booking ID cannot be empty",
         data: null,
       });
     } else {
       const query = { _id: new ObjectId(booking_id) };
 
-      let collection = await db.collection('booking');
+      let collection = await db.collection("booking");
       const result = await collection.deleteOne(query);
 
       res.status(201).send({
         resultCode: 1,
-        message: 'Booking deleted successfully',
+        message: "Booking deleted successfully",
         data: result,
       });
     }
@@ -160,7 +161,7 @@ router.post('/deleteBooking', async (req, res) => {
     console.error(error);
     res.status(500).send({
       resultCode: -1,
-      message: 'Failed to delete booking',
+      message: "Failed to delete booking",
       data: result,
     });
   }
