@@ -5,7 +5,7 @@ export const verifyToken = (req, res, next) => {
 
   if (!tokenHeader) {
     return res.status(401).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Unauthorized: Token not provided",
     });
   }
@@ -19,7 +19,7 @@ export const verifyToken = (req, res, next) => {
   } catch (error) {
     console.error("Token verification failed:", error);
     return res.status(401).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Unauthorized: Invalid token",
       token: token,
     });

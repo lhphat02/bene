@@ -16,13 +16,13 @@ router.get("/getAllUsers", async (req, res) => {
     let collection = await db.collection("users");
     let results = await collection.find({}).toArray();
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get all users successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get all users failed",
       data: null,
     });
@@ -36,13 +36,13 @@ router.get("/getUserById", async (req, res) => {
     const query = { _id: new ObjectId(req.body.user_id) };
     let results = await collection.findOne(query);
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get user by id successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get user by id failed",
       data: null,
     });
@@ -54,11 +54,11 @@ router.post("/createUser", async (req, res) => {
     const { username, email } = req.body;
     let collection = await db.collection("users");
     // Check if the username is already taken
-    const existingUser = await collection.findOne({ username });
-    const existingEmail = await collection.findOne({ email });
+    const existingUser = await collection.findOne({ username: username });
+    const existingEmail = await collection.findOne({ email: email });
     if (existingUser || existingEmail) {
       return res.status(400).send({
-        resultCode: -1,
+        statusCode: 0,
         message:
           "User is already existed, please check username or email again",
         data: null,
@@ -83,7 +83,7 @@ router.post("/createUser", async (req, res) => {
       req.body.email == null
     ) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Data cannot be empty",
         data: null,
       });
@@ -93,7 +93,7 @@ router.post("/createUser", async (req, res) => {
       const result = await collection.insertOne(newUser);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 1,
         message: "User created successfully",
         data: newUser,
       });
@@ -101,7 +101,7 @@ router.post("/createUser", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to create user",
       data: result,
     });
@@ -115,7 +115,7 @@ router.post("/login", async (req, res) => {
     console.log("user:", user);
     if (user === null) {
       res.status(400).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "User not found",
       });
     } else {
@@ -123,7 +123,7 @@ router.post("/login", async (req, res) => {
         user.token = createToken(user._id);
 
         res.status(200).send({
-          resultCode: 1,
+          statusCode: 1,
           message: "Login successfully",
           data: {
             id: user._id,
@@ -138,7 +138,7 @@ router.post("/login", async (req, res) => {
         });
       } else {
         res.status(400).send({
-          resultCode: -1,
+          statusCode: 0,
           message: "Wrong password",
         });
       }
@@ -147,7 +147,7 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Login Failed:", error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Login failed",
     });
   }
@@ -173,14 +173,14 @@ router.post("/updateUser", async (req, res) => {
     const result = await collection.updateOne(query, update);
 
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Update user successfully",
       data: result,
     });
   } catch (error) {
     console.error("Update user failed:", error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Update user failed",
     });
   }

@@ -15,14 +15,14 @@ router.get("/getAllProperties", verifyToken, async (req, res) => {
     let results = await collection.find({}).toArray();
 
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get all Properties successfully",
       data: results,
     });
   } catch (error) {
     console.error("Get all Properties failed:", error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get all Properties failed",
       data: null,
     });
@@ -43,14 +43,14 @@ router.get("/getPropertyBySearchphase", verifyToken, async (req, res) => {
     let results = resultsByName.concat(resultsByAddress);
 
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get Property successfully",
       data: results,
     });
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get Property failed",
       data: null,
     });
@@ -65,7 +65,7 @@ router.post("/createProperty", verifyToken, async (req, res) => {
     // const existingUser = await User.findOne({ username });
     // if (existingUser) {
     //   return res.status(400).send({
-    //     resultCode: -1,
+    //     statusCode: -1,
     //     message: "Username is already taken",
     //     data: null,
     //   });
@@ -96,7 +96,7 @@ router.post("/createProperty", verifyToken, async (req, res) => {
       req.body.availability == null
     ) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Data cannot be empty",
         data: null,
       });
@@ -105,7 +105,7 @@ router.post("/createProperty", verifyToken, async (req, res) => {
       const result = await collection.insertOne(newProperty);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 0,
         message: "Property created successfully",
         data: newProperty,
       });
@@ -114,7 +114,7 @@ router.post("/createProperty", verifyToken, async (req, res) => {
     console.error(error);
 
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to create property",
       data: result,
     });
@@ -161,14 +161,14 @@ router.post("/editProperty", verifyToken, async (req, res) => {
     const result = await collection.updateOne(query, editProperty);
 
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Property updated successfully",
       data: result,
     });
   } catch (error) {
     console.error("Error in updateProperty:", error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to update property",
       data: null,
     });
@@ -183,14 +183,14 @@ router.post("/deleteProperty", verifyToken, async (req, res) => {
     const result = await collection.deleteOne(query);
 
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Property deleted successfully",
       data: result,
     });
   } catch (error) {
     console.error("Error in deleteProperty:", error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to delete property",
       data: null,
     });
