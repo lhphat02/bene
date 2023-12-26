@@ -13,13 +13,13 @@ router.get("/getAllNotificaitons", verifyToken, async (req, res) => {
     let collection = await db.collection("notification");
     let results = await collection.find({}).toArray();
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get all notification successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get all notification failed",
       data: null,
     });
@@ -34,7 +34,7 @@ router.post("/createNotification", verifyToken, async (req, res) => {
     // const existingUser = await User.findOne({ username });
     // if (existingUser) {
     //   return res.status(400).send({
-    //     resultCode: -1,
+    //     statusCode: 0,
     //     message: "Username is already taken",
     //     data: null,
     //   });
@@ -59,7 +59,7 @@ router.post("/createNotification", verifyToken, async (req, res) => {
       // req.body.time_stamp == null
     ) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Data cannot be empty",
         data: null,
       });
@@ -68,7 +68,7 @@ router.post("/createNotification", verifyToken, async (req, res) => {
       const result = await collection.insertOne(newNotification);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 1,
         message: "Notification created successfully",
         data: newNotification,
       });
@@ -76,7 +76,7 @@ router.post("/createNotification", verifyToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to create Notification",
       data: result,
     });
@@ -94,13 +94,13 @@ router.get("/getNotificationById", verifyToken, async (req, res) => {
     console.log(results);
 
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get notification by id successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get notification by id failed",
       data: null,
     });

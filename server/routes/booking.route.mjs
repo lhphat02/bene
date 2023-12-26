@@ -13,13 +13,13 @@ router.get("/getAllBookings", verifyToken, async (req, res) => {
     let collection = await db.collection("booking");
     let results = await collection.find({}).toArray();
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get all booking successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get all booking failed",
       data: null,
     });
@@ -34,7 +34,7 @@ router.post("/createBooking", verifyToken, async (req, res) => {
     // const existingUser = await User.findOne({ username });
     // if (existingUser) {
     //   return res.status(400).send({
-    //     resultCode: -1,
+    //     statusCode: 0,
     //     message: "Username is already taken",
     //     data: null,
     //   });
@@ -61,7 +61,7 @@ router.post("/createBooking", verifyToken, async (req, res) => {
       req.body.booking_status == null
     ) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Data cannot be empty",
         data: null,
       });
@@ -70,7 +70,7 @@ router.post("/createBooking", verifyToken, async (req, res) => {
       const result = await collection.insertOne(newBooking);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 1,
         message: "Booking created successfully",
         data: newBooking,
       });
@@ -78,7 +78,7 @@ router.post("/createBooking", verifyToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to create Booking",
       data: result,
     });
@@ -109,7 +109,7 @@ router.post("/updateBooking", verifyToken, async (req, res) => {
 
     if (booking_id == null) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Booking ID cannot be empty",
         data: null,
       });
@@ -120,7 +120,7 @@ router.post("/updateBooking", verifyToken, async (req, res) => {
       const result = await collection.updateOne(query, booking);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 1,
         message: "Booking updated successfully",
         data: result,
       });
@@ -128,7 +128,7 @@ router.post("/updateBooking", verifyToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to update booking",
       data: result,
     });
@@ -141,7 +141,7 @@ router.post("/deleteBooking", verifyToken, async (req, res) => {
 
     if (booking_id == null) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Booking ID cannot be empty",
         data: null,
       });
@@ -152,7 +152,7 @@ router.post("/deleteBooking", verifyToken, async (req, res) => {
       const result = await collection.deleteOne(query);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 1,
         message: "Booking deleted successfully",
         data: result,
       });
@@ -160,7 +160,7 @@ router.post("/deleteBooking", verifyToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to delete booking",
       data: result,
     });
