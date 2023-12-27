@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { CONSTANTS } from '../../../../constants/Constants';
+
 const register = createAsyncThunk(
   'auth/register',
   async (data, { rejectWithValue }) => {
@@ -8,20 +10,10 @@ const register = createAsyncThunk(
       console.log('\x1b[33m REGISTER WITH DATA: \x1b[0m', data);
 
       // Make the API call
-      const response = await axios.post(
-        'http://192.168.1.10:5050/users/createUser',
-        {
-          username: data.username,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          displayName: data.accountName,
-          password: data.password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+      const response = await CONSTANTS.FUNCTIONS.AXIOS.POST(
+        CONSTANTS.ENDPOINTS.USER.REGISTER,
+        data,
+        false
       );
 
       // Get the JSON response body

@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+
+import { CONSTANTS } from '../../../../constants/Constants';
 import { storeLocalData } from '../../../../utils/helper/user';
 
 const login = createAsyncThunk(
@@ -9,14 +11,10 @@ const login = createAsyncThunk(
       console.log('\x1b[33m LOGIN WITH DATA: \x1b[0m', data);
 
       // Make the API call
-      const response = await axios.post(
-        'http://192.168.1.10:5050/users/login',
+      const response = await CONSTANTS.FUNCTIONS.AXIOS.POST(
+        CONSTANTS.ENDPOINTS.USER.LOGIN,
         data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        false
       );
 
       // Get the JSON response body
@@ -32,7 +30,7 @@ const login = createAsyncThunk(
       }
 
       // Store the user_id in AsyncStorage
-      await storeLocalData('userId', responseData.data._id);
+      await storeLocalData('userId', responseData.data.id);
 
       // Store the token in AsyncStorage
       await storeLocalData('token', responseData.data.token);

@@ -20,6 +20,11 @@ const getStyles = (isDarkMode) =>
       marginTop: 50,
       color: colors.tertiary,
     },
+    list: {
+      width: '100%',
+      flex: 1,
+      overflow: 'visible',
+    },
     text: {
       marginTop: 20,
       textAlign: 'center',

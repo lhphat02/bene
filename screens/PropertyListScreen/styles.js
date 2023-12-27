@@ -9,7 +9,7 @@ const getStyles = (isDarkMode) =>
       flex: 1,
       gap: 20,
       alignItems: 'center',
-      padding: 10,
+      padding: 20,
       overflow: 'visible',
 
       backgroundColor: isDarkMode ? darkColors.background : 'white',

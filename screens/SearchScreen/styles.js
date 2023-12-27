@@ -9,17 +9,10 @@ const getStyles = (isDarkMode) =>
       flex: 1,
       gap: 20,
       alignItems: 'center',
-      padding: 10,
+      padding: 20,
       overflow: 'visible',
 
       backgroundColor: isDarkMode ? darkColors.background : 'white',
-    },
-    header: {
-      fontSize: 24,
-      fontWeight: '900',
-      textAlign: 'center',
-      marginTop: 50,
-      color: colors.tertiary,
     },
     list: {
       width: '100%',
@@ -27,9 +20,9 @@ const getStyles = (isDarkMode) =>
       overflow: 'visible',
     },
     text: {
-      marginTop: 20,
+      marginTop: 32,
       textAlign: 'center',
-      fontSize: 16,
+      fontSize: 24,
       color: isDarkMode ? 'white' : 'gray',
     },
   });
