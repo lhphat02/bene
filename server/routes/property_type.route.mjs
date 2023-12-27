@@ -12,13 +12,13 @@ router.get("/getAllPropertyTypes", verifyToken, async (req, res) => {
     let collection = await db.collection("property_type");
     let results = await collection.find({}).toArray();
     res.status(200).send({
-      resultCode: 1,
+      statusCode: 1,
       message: "Get all property_type successfully",
       data: results,
     });
   } catch (error) {
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Get all property_type failed",
       data: null,
     });
@@ -33,7 +33,7 @@ router.post("/createPropertyType", verifyToken, async (req, res) => {
     // const existingUser = await User.findOne({ username });
     // if (existingUser) {
     //   return res.status(400).send({
-    //     resultCode: -1,
+    //     statusCode: 0,
     //     message: "Username is already taken",
     //     data: null,
     //   });
@@ -51,7 +51,7 @@ router.post("/createPropertyType", verifyToken, async (req, res) => {
     const newPropertyType = new PropertyType(req.body);
     if (req.body.property_type == null) {
       res.status(500).send({
-        resultCode: -1,
+        statusCode: 0,
         message: "Data cannot be empty",
         data: null,
       });
@@ -60,7 +60,7 @@ router.post("/createPropertyType", verifyToken, async (req, res) => {
       const result = await collection.insertOne(newPropertyType);
 
       res.status(201).send({
-        resultCode: 1,
+        statusCode: 1,
         message: "PropertyType created successfully",
         data: newPropertyType,
       });
@@ -68,7 +68,7 @@ router.post("/createPropertyType", verifyToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({
-      resultCode: -1,
+      statusCode: 0,
       message: "Failed to create PropertyType",
       data: result,
     });
