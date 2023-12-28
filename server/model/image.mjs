@@ -5,6 +5,10 @@ const imageSchema = new Mongoose.Schema({
     type: String,
     required: true,
   },
+  image_name: {
+    type: String,
+    required: true,
+  },
   image_url: {
     type: String,
     required: true,
