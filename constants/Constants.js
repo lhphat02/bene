@@ -7,15 +7,16 @@ import axios from 'axios';
 import { getLocalData } from '../utils/helper/user';
 
 // Alternative host names:
-// const host_name = 'http://192.168.1.10:5050/'; // Home host name
+const host_name = 'http://192.168.1.10:5050/'; // Home host name
 // const host_name = 'http://localhost:5050/'; // Not work on React Native
-const host_name = 'http://192.168.1.69:5050/'; // For Kai Coffee
+// const host_name = 'http://192.168.1.69:5050/'; // For Kai Coffee
 
 export const CONSTANTS = {
   ENDPOINTS: {
     USER: {
       LOGIN: `users/login`,
       REGISTER: `users/createUser`,
+      GET_USER: `users/getUserById`,
     },
     PROPERTY: {
       CREATE: `property/createProperty`,

@@ -43,6 +43,7 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload.message;
       })
       .addCase(register.pending, (state) => {
@@ -53,6 +54,7 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(register.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload.message;
       });
   },

@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 import { CONSTANTS } from '../../../../constants/Constants';
 
@@ -12,7 +11,13 @@ const register = createAsyncThunk(
       // Make the API call
       const response = await CONSTANTS.FUNCTIONS.AXIOS.POST(
         CONSTANTS.ENDPOINTS.USER.REGISTER,
-        data,
+        {
+          username: data.username,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+          displayName: data.accountName,
+          password: data.password,
+        },
         false
       );
 
@@ -23,7 +28,7 @@ const register = createAsyncThunk(
       console.log('\x1b[33m RESPONSE: \x1b[0m', responseData);
 
       // If the response contains an error code, reject the thunk with the error message
-      if (!responseData.resultCode) {
+      if (!responseData.statusCode) {
         console.log('\x1b[33m REGISTER FAILED \x1b[0m');
         return rejectWithValue(responseData);
       }

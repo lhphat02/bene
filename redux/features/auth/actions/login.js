@@ -24,7 +24,7 @@ const login = createAsyncThunk(
       console.log('\x1b[33m RESPONSE: \x1b[0m', responseData);
 
       // If the response contains an error code, reject the thunk with the error message
-      if (!responseData.resultCode) {
+      if (!responseData.statusCode) {
         console.log('\x1b[33m LOGIN FAILED \x1b[0m');
         return rejectWithValue(responseData);
       }
