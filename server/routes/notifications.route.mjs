@@ -83,7 +83,7 @@ router.post("/createNotification", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/getNotificationById", verifyToken, async (req, res) => {
+router.get("/getNotificationByUserId", verifyToken, async (req, res) => {
   try {
     const userId = req.query.user_id || 0;
     const query = { user_id: userId };
