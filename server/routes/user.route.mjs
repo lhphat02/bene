@@ -28,12 +28,12 @@ router.get("/getAllUsers", async (req, res) => {
     });
   }
 });
-// de commit th
 
 router.get("/getUserById", async (req, res) => {
   try {
+    const userId = req.query.user_id || 0;
     let collection = await db.collection("users");
-    const query = { _id: new ObjectId(req.body.user_id) };
+    const query = { _id: new ObjectId(userId) };
     let results = await collection.findOne(query);
     res.status(200).send({
       statusCode: 1,

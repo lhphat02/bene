@@ -31,21 +31,24 @@ router.get("/getAllProperties", verifyToken, async (req, res) => {
 
 router.get("/getPropertyBySearchphase", verifyToken, async (req, res) => {
   try {
-    const property_name = req.body.property_name;
-    const address = req.body.address;
+    const keyword = req.query.keyword || "";
     let collection = await db.collection("property");
     let resultsByName = await collection
-      .find({ property_name: { $regex: new RegExp(property_name, "i") } })
+      .find({ property_name: { $regex: new RegExp(keyword, "i") } })
       .toArray();
     let resultsByAddress = await collection
-      .find({ address: { $regex: new RegExp(address, "i") } })
+      .find({ address: { $regex: new RegExp(keyword, "i") } })
       .toArray();
     let results = resultsByName.concat(resultsByAddress);
+    const filteredResults = results.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => JSON.stringify(t) === JSON.stringify(item))
+    );
 
     res.status(200).send({
       statusCode: 1,
       message: "Get Property successfully",
-      data: results,
+      data: filteredResults,
     });
   } catch (error) {
     console.error(error);
@@ -105,7 +108,7 @@ router.post("/createProperty", verifyToken, async (req, res) => {
       const result = await collection.insertOne(newProperty);
 
       res.status(201).send({
-        statusCode: 0,
+        statusCode: 1,
         message: "Property created successfully",
         data: newProperty,
       });
