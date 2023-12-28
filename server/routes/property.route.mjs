@@ -60,6 +60,28 @@ router.get("/getPropertyBySearchphase", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/getPropertyById", verifyToken, async (req, res) => {
+  try {
+    const property_id = req.query.property_id;
+    const query = { _id: new ObjectId(property_id) };
+    let collection = await db.collection("property");
+    let results = await collection.findOne(query);
+
+    res.status(200).send({
+      statusCode: 1,
+      message: "Get Property successfully",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      statusCode: 0,
+      message: "Get Property failed",
+      data: null,
+    });
+  }
+});
+
 router.post("/createProperty", verifyToken, async (req, res) => {
   try {
     // const { username, password, displayName, phoneNumber, email } = req.body;
