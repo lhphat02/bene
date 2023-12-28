@@ -1,26 +1,34 @@
+/**
+ * @fileoverview This file contains the constants used throughout the app.
+ * @module constants/Constants
+ */
+
 import axios from 'axios';
+import { getLocalData } from '../utils/helper/user';
+
+// Alternative host names:
+const host_name = 'http://192.168.1.10:5050/'; // Home host name
+// const host_name = 'http://localhost:5050/'; // Not work on React Native
+// const host_name = 'http://192.168.1.69:5050/'; // For Kai Coffee
 
 export const CONSTANTS = {
-  PATH: {
-    HOME: 'http://192.168.1.10:5050/',
-    KAI: 'http://192.168.0.98:5050/',
-  },
-  API: {
+  ENDPOINTS: {
     USER: {
-      LOGIN: `${CONSTANTS.PATH.HOME}/users/login`,
-      REGISTER: `${CONSTANTS.PATH.HOME}/users/createUser`,
+      LOGIN: `users/login`,
+      REGISTER: `users/createUser`,
+      GET_USER: `users/getUserById`,
     },
     PROPERTY: {
-      CREATE: `${CONSTANTS.PATH.HOME}/property/createProperty`,
-      GET_ALL: `${CONSTANTS.PATH.HOME}/property/getAllProperties`,
-      EDIT: `${CONSTANTS.PATH.HOME}/property/editProperty`,
-      DELETE: `${CONSTANTS.PATH.HOME}/property/deleteProperty`,
+      CREATE: `property/createProperty`,
+      GET_ALL: `property/getAllProperties`,
+      EDIT: `property/editProperty`,
+      DELETE: `property/deleteProperty`,
     },
     BOOKING: {
-      CREATE: `${CONSTANTS.PATH.HOME}/booking/createBooking`,
-      GET_ALL: `${CONSTANTS.PATH.HOME}/booking/getAllBookings`,
-      UPDATE: `${CONSTANTS.PATH.HOME}/booking/updateBooking`,
-      DELETE: `${CONSTANTS.PATH.HOME}/booking/deleteBooking`,
+      CREATE: `booking/createBooking`,
+      GET_ALL: `booking/getAllBookings`,
+      UPDATE: `booking/updateBooking`,
+      DELETE: `booking/deleteBooking`,
     },
   },
   FUNCTIONS: {
@@ -33,10 +41,10 @@ export const CONSTANTS = {
        * @returns {Object} The Axios config object.
        * @throws {Error} If an error occurs during token retrieval.
        */
-      BEARER_TOKEN: (data) => {
+      BEARER_TOKEN: async (data) => {
         try {
           // Get the token from local storage
-          const tokenObject = JSON.parse(localStorage.getItem('token'));
+          const tokenObject = await JSON.parse(getLocalData('token'));
           const token = tokenObject.token;
 
           // If data is provided, return it with the token
@@ -90,21 +98,62 @@ export const CONSTANTS = {
        * @function POST
        * @param {string} url - The endpoint URL.
        * @param {Object} data - The data to send.
-       * @param {string} screenId - The screen ID to include in the headers.
+       * @param {boolean} includeBearerToken - Whether to include the bearer token in the request headers.
        * @returns {Promise} A promise that resolves with the response data.
        */
-      POST: async (url, data, screenId) => {
+      POST: async (url, data, includeBearerToken = true) => {
+        console.log('URL: ', host_name + url);
+
+        // Prepare headers
+        let headers = {};
+        if (includeBearerToken) {
+          headers = {
+            ...headers,
+            ...CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN(),
+          };
+        }
+
+        console.log('HEADERS: ', headers);
+
         // Send the request
-        const response = await axios.post(
-          host_name + url,
-          CONSTANTS.FUNCTIONS.AXIOS.ENCODE_FORM_DATA(data),
-          {
-            headers: {
-              ...CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN(),
-              screen_id: screenId,
-            },
-          }
-        );
+        const response = await axios.post(host_name + url, data, {
+          headers: headers,
+        });
+
+        // If the response data is a string, parse it into an object
+        if (typeof response.data === 'string') {
+          return {
+            ...response,
+            data: JSON.parse(response.data.trim()),
+          };
+        }
+
+        return response;
+      },
+
+      /**
+       * Sends a GET request using Axios.
+       *
+       * @async
+       * @function GET
+       * @param {string} url - The endpoint URL.
+       * @param {boolean} includeBearerToken - Whether to include the bearer token in the request headers.
+       * @returns {Promise} A promise that resolves with the response data.
+       */
+      GET: async (url, includeBearerToken = true) => {
+        // Prepare headers
+        let headers = {};
+        if (includeBearerToken) {
+          headers = {
+            ...headers,
+            ...CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN(),
+          };
+        }
+
+        // Send the request
+        const response = await axios.get(host_name + url, {
+          headers: headers,
+        });
 
         // If the response data is a string, parse it into an object
         if (typeof response.data === 'string') {
