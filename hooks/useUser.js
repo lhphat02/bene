@@ -18,16 +18,8 @@ const useUserData = () => {
 
         console.log('\x1b[32m USING USER ID: \x1b[0m', userId);
 
-        const response = await axios.get(
-          'http://192.168.1.10:5050/users/getUserById',
-          {
-            params: {
-              user_id: userId,
-            },
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
+        const response = await CONSTANTS.FUNCTIONS.AXIOS.GET(
+          `${CONSTANTS.ENDPOINTS.USER.GET_USER}?user_id=${userId}`
         );
 
         const result = response.data;

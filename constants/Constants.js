@@ -14,13 +14,69 @@ const host_name = 'http://192.168.1.10:5050/'; // Home host name
 export const CONSTANTS = {
   ENDPOINTS: {
     USER: {
+      /**
+       * The endpoint for user login.
+       * @url http://{host}/users/login
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.username - The username.
+       * @param {string} data.password - The password (not encrypted).
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The user data.
+       */
       LOGIN: `users/login`,
+
+      /**
+       * The endpoint for user registration.
+       * @url http://{host}/users/createUser
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.username - The username.
+       * @param {string} data.password - The password (not encrypted).
+       * @param {string} data.email - The email.
+       * @param {string} data.phone - The phone number.
+       * @param {string} data.address - The address.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The user data.
+       */
       REGISTER: `users/createUser`,
+
+      /**
+       * The endpoint for getting user by id.
+       * @url http://{host}/users/getUserById
+       * @method GET
+       * @param {string} user_id - The user id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The user data.
+       */
       GET_USER: `users/getUserById`,
     },
     PROPERTY: {
       CREATE: `property/createProperty`,
+
+      /**
+       * The endpoint for getting all properties.
+       * @url http://{host}/property/getAllProperties
+       * @method GET
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object[]} response.data.data - The list of properties.
+       */
       GET_ALL: `property/getAllProperties`,
+
+      /**
+       * The endpoint for getting property by keyword.
+       * @url http://{host}/property/getPropertyBySearchphase
+       * @method GET
+       * @param {string} keyword - The keyword to search for.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object[]} response.data.data - The list of properties.
+       */
+      GET_BY_KEYWORD: `property/getPropertyBySearchphase`,
       EDIT: `property/editProperty`,
       DELETE: `property/deleteProperty`,
     },
@@ -102,8 +158,6 @@ export const CONSTANTS = {
        * @returns {Promise} A promise that resolves with the response data.
        */
       POST: async (url, data, includeBearerToken = true) => {
-        console.log('URL: ', host_name + url);
-
         // Prepare headers
         let headers = {};
         if (includeBearerToken) {
@@ -112,8 +166,6 @@ export const CONSTANTS = {
             ...CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN(),
           };
         }
-
-        console.log('HEADERS: ', headers);
 
         // Send the request
         const response = await axios.post(host_name + url, data, {

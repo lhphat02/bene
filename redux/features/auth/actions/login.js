@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 import { CONSTANTS } from '../../../../constants/Constants';
 import { storeLocalData } from '../../../../utils/helper/user';
