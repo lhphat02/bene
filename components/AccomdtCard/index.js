@@ -13,7 +13,7 @@ const AccomdtCard = ({ data, onCardClicked }) => {
   const shortAddress = shortener(data?.address, 50);
   const shortDescription = shortener(data?.description, 50);
 
-  const isImageUrl = data.image
+  const isImageUrl = data?.image
     ? shortener(data.image, 4) === 'http...'
     : false;
 

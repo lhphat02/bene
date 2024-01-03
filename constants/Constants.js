@@ -7,7 +7,7 @@ import axios from 'axios';
 import { getLocalData } from '../utils/helper/user';
 
 // Alternative host names:
-const host_name = 'http://192.168.1.10:5050/'; // Home host name
+const host_name = 'http://192.168.1.13:5050/'; // Home host name
 // const host_name = 'http://localhost:5050/'; // Not work on React Native
 // const host_name = 'http://192.168.1.69:5050/'; // For Kai Coffee
 
@@ -16,7 +16,7 @@ export const CONSTANTS = {
     USER: {
       /**
        * The endpoint for user login.
-       * @url http://{host}/users/login
+       * @url http://host/users/login
        * @method POST
        * @param {Object} data - BODY
        * @param {string} data.username - The username.
@@ -29,7 +29,7 @@ export const CONSTANTS = {
 
       /**
        * The endpoint for user registration.
-       * @url http://{host}/users/createUser
+       * @url http://host/users/createUser
        * @method POST
        * @param {Object} data - BODY
        * @param {string} data.username - The username.
@@ -45,7 +45,7 @@ export const CONSTANTS = {
 
       /**
        * The endpoint for getting user by id.
-       * @url http://{host}/users/getUserById
+       * @url http://host/users/getUserById
        * @method GET
        * @param {string} user_id - The user id.
        * @returns {number} response.data.statusCode - The status code.
@@ -57,7 +57,7 @@ export const CONSTANTS = {
     PROPERTY: {
       /**
        * The endpoint for creating a property.
-       * @url http://{host}/property/createProperty
+       * @url http://host/property/createProperty
        * @method POST
        * @param {Object} data - BODY
        * @param {string} data.user_id - The user id.
@@ -80,7 +80,7 @@ export const CONSTANTS = {
 
       /**
        * The endpoint for getting all properties.
-       * @url http://{host}/property/getAllProperties
+       * @url http://host/property/getAllProperties
        * @method GET
        * @returns {number} response.data.statusCode - The status code.
        * @returns {string} response.data.message - The message.
@@ -90,7 +90,7 @@ export const CONSTANTS = {
 
       /**
        * The endpoint for getting property by keyword.
-       * @url http://{host}/property/getPropertyBySearchphase
+       * @url http://host/property/getPropertyBySearchphase
        * @method GET
        * @param {string} keyword - The keyword to search for.
        * @returns {number} response.data.statusCode - The status code.

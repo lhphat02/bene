@@ -6,9 +6,11 @@ import {
   Text,
   TextInput,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ThemeContext } from '../../context/ThemeContext';
 import { getLocationFromAddress } from '../../utils/helper/location';
@@ -57,6 +59,8 @@ const formInput = [
 const PropertyListScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.property.loading);
+  const error = useSelector((state) => state.property.error);
   const { t } = useTranslation();
   const styles = getStyles(isDarkMode);
   const [formData, setFormData] = useState({
@@ -156,6 +160,14 @@ const PropertyListScreen = ({ navigation }) => {
     console.log('Create property: ', formData);
 
     dispatch(createProperty(formData));
+
+    if (error) {
+      Alert.alert('Error', error);
+    }
+
+    Alert.alert('Success', 'Property created successfully');
+
+    !loading && navigation.goBack();
   };
 
   return (
@@ -184,8 +196,16 @@ const PropertyListScreen = ({ navigation }) => {
           />
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.button} onPress={handleCreateProperty}>
-        <Ionicons name="add" size={24} color="white" />
+      <TouchableOpacity
+        disabled={loading}
+        style={styles.button}
+        onPress={handleCreateProperty}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="white" />
+        ) : (
+          <Ionicons name="add" size={24} color="white" />
+        )}
         <Text style={styles.button_text}>Create</Text>
       </TouchableOpacity>
     </View>

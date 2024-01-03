@@ -16,6 +16,12 @@ const login = createAsyncThunk(
         false
       );
 
+      // const response = await CONSTANTS.FUNCTIONS.AXIOS.POST(
+      //   `${CONSTANTS.ENDPOINTS.USER.LOGIN}?username=${username}&password=${password}`,
+      //   {},
+      //   false
+      // );
+
       // Get the JSON response body
       const responseData = response.data;
 

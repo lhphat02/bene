@@ -8,6 +8,7 @@ import Loading from '../Loading';
 import getAllProperties from '../../redux/features/properties/actions/getAllProperties';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
+import { getLocalData } from '../../utils/helper/user';
 
 const PropertyList = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const PropertyList = () => {
   const data = useSelector((state) => state.property.properties);
   const navigation = useNavigation();
   const styles = useMemo(() => getStyles(isDarkMode), [isDarkMode]);
+  const userId = useMemo(async () => await getLocalData('userId'), []);
 
   const fetchProperties = useCallback(() => {
     dispatch(getAllProperties());
@@ -25,12 +27,22 @@ const PropertyList = () => {
   useEffect(() => {
     fetchProperties();
 
-    // const unsubscribe = navigation.addListener('focus', () => {
-    //   fetchProperties();
-    // });
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchProperties();
+    });
 
-    // return unsubscribe;
+    return unsubscribe;
   }, [fetchProperties, navigation]);
+
+  const handleCardClicked = (item) => {
+    if (userId._j === item?.user_id) {
+      return navigation.navigate('EditProperty', { data: item });
+    }
+
+    navigation.navigate('AccomdtDetail', { data: item });
+  };
+
+  console.log('User ID: ', userId);
 
   if (loading) {
     return (
@@ -64,9 +76,29 @@ const PropertyList = () => {
         renderItem={({ item }) => (
           <AccomdtCard
             data={item}
-            onCardClicked={() =>
-              navigation.navigate('AccomdtDetail', { data: item })
-            }
+            onCardClicked={() => {
+              if (userId._j === item?.user_id) {
+                return navigation.navigate('AccomdtTopTab', {
+                  screen: 'PropertyStack',
+                  params: {
+                    screen: 'PropertyDetail',
+                    params: {
+                      data: item,
+                    },
+                  },
+                });
+              }
+
+              navigation.navigate('AccomdtTopTab', {
+                screen: 'AccomdtStack',
+                params: {
+                  screen: 'AccomdtDetail',
+                  params: {
+                    data: item,
+                  },
+                },
+              });
+            }}
           />
         )}
         keyExtractor={(item) => item._id}
