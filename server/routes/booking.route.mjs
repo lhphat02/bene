@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import Booking from "../model/booking.mjs";
 import { ObjectId } from "mongodb";
 import { verifyToken } from "../middleware/verifyToken.mjs";
+import Notification from "../model/notifications.mjs";
 
 const router = express.Router();
 // const db = mongoose.connection;
@@ -166,5 +167,54 @@ router.post("/deleteBooking", verifyToken, async (req, res) => {
     });
   }
 });
+
+async function getUserByPropertyId(propertyId) {
+  let collection = await db.collection("property");
+  const property = await collection.findOne({ _id: new ObjectId(propertyId) });
+  return property ? property.user_id : null;
+}
+
+router.post("/createBookingWithNoti", verifyToken, async (req, res) => {
+  try {
+    const newBooking = new Booking(req.body);
+
+    // Your existing validation code...
+
+    let collection = await db.collection("booking");
+    const result = await collection.insertOne(newBooking);
+
+
+    const receiverId = await getUserByPropertyId(req.body.property_id);
+    console.log('receiverId: ',receiverId);
+
+    const newNotification = new Notification({
+      user_id: receiverId, 
+      sender_id: req.body.user_id, 
+      receiver_id: receiverId, 
+      booking_id: newBooking._id, 
+      message: "New booking created",
+    });
+
+
+    let notiCollection = await db.collection("notification");
+    const notiResult = await notiCollection.insertOne(newNotification);
+
+    res.status(201).send({
+      statusCode: 1,
+      message: "Booking created successfully",
+      dataBooking: newBooking,
+      dataNotification: newNotification,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      statusCode: 0,
+      message: "Failed to create Booking",
+      data: null,
+    });
+  }
+});
+
+
 
 export default router;
