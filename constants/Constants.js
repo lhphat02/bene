@@ -55,6 +55,27 @@ export const CONSTANTS = {
       GET_USER: `users/getUserById`,
     },
     PROPERTY: {
+      /**
+       * The endpoint for creating a property.
+       * @url http://{host}/property/createProperty
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.user_id - The user id.
+       * @param {string} data.property_name - The property name.
+       * @param {string} data.description - The description.
+       * @param {string} data.address - The address.
+       * @param {number} data.price_per_night - The price per night.
+       * @param {number} data.max_guests - The maximum number of guests.
+       * @param {number} data.beds - The number of beds.
+       * @param {number} data.bedrooms - The number of bedrooms.
+       * @param {number} data.size - The size.
+       * @param {string} data.availability - The availability.
+       * @param {string} data.long_lat - The longitude and latitude.
+       * @param {string} data.image - The image.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The property data.
+       */
       CREATE: `property/createProperty`,
 
       /**
@@ -100,20 +121,19 @@ export const CONSTANTS = {
       BEARER_TOKEN: async (data) => {
         try {
           // Get the token from local storage
-          const tokenObject = await JSON.parse(getLocalData('token'));
-          const token = tokenObject.token;
+          const token = await getLocalData('token');
 
           // If data is provided, return it with the token
           if (data) {
             return {
               ...data,
-              Authorization: `bearer ${token}`,
+              Authorization: `Bearer ${token}`,
             };
           }
 
           // Otherwise, return the token
           return {
-            Authorization: `bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           };
         } catch (error) {
           console.log('Error getting token: ', error);
@@ -161,9 +181,11 @@ export const CONSTANTS = {
         // Prepare headers
         let headers = {};
         if (includeBearerToken) {
+          const authorization = await CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN();
+
           headers = {
             ...headers,
-            ...CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN(),
+            ...authorization,
           };
         }
 
@@ -196,9 +218,11 @@ export const CONSTANTS = {
         // Prepare headers
         let headers = {};
         if (includeBearerToken) {
+          const authorization = await CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN();
+
           headers = {
             ...headers,
-            ...CONSTANTS.FUNCTIONS.AXIOS.BEARER_TOKEN(),
+            ...authorization,
           };
         }
 

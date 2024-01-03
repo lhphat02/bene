@@ -6,11 +6,15 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ThemeContext } from '../../context/ThemeContext';
 import getStyles from './styles';
 import Divider from '../../components/Divider';
+import { shortener } from '../../utils/formatter';
 
 const AccomdtDetailScreen = ({ navigation, route }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const { data } = route.params;
   const styles = getStyles(isDarkMode);
+  const isImageUrl = data.image
+    ? shortener(data.image, 4) === 'http...'
+    : false;
 
   return (
     <View style={styles.container}>
@@ -29,9 +33,9 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
         <Image
           style={styles.image}
           source={
-            data?.image_url
+            isImageUrl
               ? {
-                  uri: data?.image_url,
+                  uri: data?.image,
                 }
               : require('../../assets/house1.jpg')
           }

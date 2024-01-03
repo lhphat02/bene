@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   View,
@@ -8,11 +8,16 @@ import {
   ScrollView,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { ThemeContext } from '../../context/ThemeContext';
 import { getLocationFromAddress } from '../../utils/helper/location';
+import { getLocalData } from '../../utils/helper/user';
 import getStyles from './styles';
+import { formatLongLat } from '../../utils/formatter';
+import useDebounce from '../../hooks/useDebounce';
+import createProperty from '../../redux/features/properties/actions/createProperty';
+import { getRandomHouseImage } from '../../utils/helper/property';
 
 const formInput = [
   {
@@ -51,11 +56,11 @@ const formInput = [
 
 const PropertyListScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const userId = useSelector((state) => state.auth.user_id);
   const styles = getStyles(isDarkMode);
   const [formData, setFormData] = useState({
-    user_id: userId,
+    user_id: '',
     property_name: '',
     description: '',
     address: '',
@@ -65,23 +70,56 @@ const PropertyListScreen = ({ navigation }) => {
     bedrooms: '',
     size: '',
     long_lat: '',
-    availability: 0,
+    availability: 1,
+    image: getRandomHouseImage(),
   });
+  const debouncedAddress = useDebounce(formData.address, 1000);
+
+  useEffect(() => {
+    const initializeFormData = async () => {
+      const userId = await getLocalData('userId');
+      setFormData({ ...formData, user_id: userId });
+    };
+
+    initializeFormData();
+  }, []);
 
   const handleInputChange = (name) => (text) => {
     setFormData({ ...formData, [name]: text });
   };
 
-  const handleGetLongLat = async () => {
-    const { address } = formData;
-    const longLat = await getLocationFromAddress(address);
-    console.log('longLat', longLat);
-    setFormData({ ...formData, long_lat: longLat });
-  };
+  useEffect(() => {
+    if (debouncedAddress) {
+      const handleGetLongLat = async () => {
+        if (!formData.address) {
+          alert('Please fill in address');
+          return;
+        }
 
-  console.log('Address', formData.address);
+        const { address } = formData;
 
-  const handleCreateProperty = () => {
+        const rawLongLat = await getLocationFromAddress(address);
+
+        const longlat = formatLongLat(
+          rawLongLat[0].longitude,
+          rawLongLat[0].latitude
+        );
+
+        console.log('LongLat: ', longlat);
+
+        setFormData({
+          ...formData,
+          long_lat: longlat,
+        });
+
+        return longlat;
+      };
+
+      handleGetLongLat();
+    }
+  }, [debouncedAddress]);
+
+  const handleCreateProperty = async () => {
     const {
       user_id,
       property_name,
@@ -91,9 +129,10 @@ const PropertyListScreen = ({ navigation }) => {
       max_guests,
       beds,
       bedrooms,
-      size,
       long_lat,
+      size,
       availability,
+      image,
     } = formData;
 
     if (
@@ -105,18 +144,19 @@ const PropertyListScreen = ({ navigation }) => {
       !max_guests ||
       !beds ||
       !bedrooms ||
-      !size ||
       !long_lat ||
-      !availability
+      !size ||
+      !availability ||
+      !image
     ) {
       alert('Please fill in all fields');
       return;
     }
 
+    console.log('Create property: ', formData);
+
     dispatch(createProperty(formData));
   };
-
-  console.log('userId', userId);
 
   return (
     <View style={styles.container}>
@@ -144,7 +184,7 @@ const PropertyListScreen = ({ navigation }) => {
           />
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.button} onPress={handleGetLongLat}>
+      <TouchableOpacity style={styles.button} onPress={handleCreateProperty}>
         <Ionicons name="add" size={24} color="white" />
         <Text style={styles.button_text}>Create</Text>
       </TouchableOpacity>

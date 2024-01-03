@@ -27,7 +27,7 @@ const getStyles = (isDarkMode) =>
     button_text: {
       fontSize: 16,
       fontWeight: '900',
-      color: isDarkMode ? 'white' : 'black',
+      color: 'white',
     },
     header: {
       fontSize: 24,

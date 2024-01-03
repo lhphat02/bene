@@ -17,8 +17,6 @@ const ProfileScreen = ({ navigation }) => {
 
   const styles = getStyles(isDarkMode);
 
-  console.log('User in FE:', userData);
-
   const handleLogout = () => {
     Alert.alert(
       'Logout',

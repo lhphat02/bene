@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
+
 import theme from '../../constants/theme';
 
-const { colors } = theme;
+const { colors, darkColors } = theme;
 
 const getStyles = (isDarkMode) =>
   StyleSheet.create({
@@ -12,19 +13,15 @@ const getStyles = (isDarkMode) =>
       alignItems: 'center',
       gap: 10,
       paddingHorizontal: 20,
-      backgroundColor: isDarkMode ? '#171717' : '#fff',
     },
-    title: {
-      fontSize: 24,
-      fontWeight: '900',
-      textAlign: 'center',
-      marginTop: 50,
-      color: colors.tertiary,
+    list: {
+      width: '100%',
+      overflow: 'visible',
+      flex: 1,
     },
     text: {
-      marginTop: 20,
       textAlign: 'center',
-      fontSize: 16,
+      fontSize: 24,
       color: isDarkMode ? 'white' : 'gray',
     },
   });

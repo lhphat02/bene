@@ -30,8 +30,6 @@ export const getLocalData = async (key) => {
       return null;
     }
 
-    console.log(`${key} retrieved successfully: `, value);
-
     return value;
   } catch (error) {
     console.error(`Error retrieving ${key}: `, error);

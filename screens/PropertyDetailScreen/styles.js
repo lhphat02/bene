@@ -68,11 +68,12 @@ const getStyles = (isDarkMode) =>
     description: {
       fontSize: 20,
       marginVertical: 10,
+      textAlign: 'justify',
       color: isDarkMode ? 'white' : 'black',
     },
     text: {
       marginVertical: 5,
-      fontSize: 16,
+      fontSize: 20,
       color: isDarkMode ? 'white' : 'black',
     },
   });

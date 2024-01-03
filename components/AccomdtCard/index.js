@@ -13,14 +13,18 @@ const AccomdtCard = ({ data, onCardClicked }) => {
   const shortAddress = shortener(data?.address, 50);
   const shortDescription = shortener(data?.description, 50);
 
+  const isImageUrl = data.image
+    ? shortener(data.image, 4) === 'http...'
+    : false;
+
   return (
     <TouchableOpacity style={styles.container} onPress={onCardClicked}>
       <Image
         style={styles.image}
         source={
-          data?.image_url
+          isImageUrl
             ? {
-                uri: data?.image_url,
+                uri: data?.image,
               }
             : require('../../assets/house1.jpg')
         }

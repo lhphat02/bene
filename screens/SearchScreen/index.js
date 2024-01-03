@@ -5,6 +5,7 @@ import { Text, View } from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
+import SearchResultList from '../../components/SearchResultList';
 
 const SearchScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -21,7 +22,7 @@ const SearchScreen = ({ navigation }) => {
         setSearchPhrase={setSearchPhrase}
         setClicked={setClicked}
       />
-      <Text style={styles.text}>No result</Text>
+      <SearchResultList keyword={searchPhrase} />
     </View>
   );
 };

@@ -53,7 +53,7 @@ const getStyles = (isDarkMode) =>
       height: 50,
       alignItems: 'center',
       justifyContent: 'center',
-      elevation: 10,
+      elevation: 5,
       gap: 10,
       borderRadius: 10,
       backgroundColor: isDarkMode ? darkColors.secondary : 'white',
@@ -61,7 +61,7 @@ const getStyles = (isDarkMode) =>
     button_text: {
       fontSize: 16,
       fontWeight: '900',
-      color: isDarkMode ? 'white' : 'black',
+      color: 'white',
     },
     header: {
       width: '100%',

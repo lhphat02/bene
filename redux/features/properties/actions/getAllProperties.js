@@ -15,7 +15,10 @@ const getAllProperties = createAsyncThunk(
       const responseData = response.data;
 
       // Log the response
-      console.log('\x1b[33m RESPONSE: gbrx1b[0m', responseData);
+      console.log(
+        '\x1b[33m PROPERTIES COUNT: \x1b[0m',
+        responseData.data.length
+      );
 
       // If the response contains an error code, reject the thunk with the error message
       if (!responseData.statusCode) {
