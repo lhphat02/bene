@@ -192,7 +192,7 @@ router.post("/createBookingWithNoti", verifyToken, async (req, res) => {
       sender_id: req.body.user_id, 
       receiver_id: receiverId, 
       booking_id: newBooking._id, 
-      message: "New booking created",
+      message: "New reservation available",
     });
 
 
@@ -210,6 +210,29 @@ router.post("/createBookingWithNoti", verifyToken, async (req, res) => {
     res.status(500).send({
       statusCode: 0,
       message: "Failed to create Booking",
+      data: null,
+    });
+  }
+});
+
+router.get("/getBookingById", verifyToken, async (req, res) => {
+  try {
+    const booking_id = req.query.booking_id;
+    const query = { _id: new ObjectId(booking_id) };
+    console.log(query);
+    let collection = await db.collection("booking");
+    let results = await collection.findOne(query);
+
+    res.status(200).send({
+      statusCode: 1,
+      message: "Get Booking successfully",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      statusCode: 0,
+      message: "Get Booking failed",
       data: null,
     });
   }
