@@ -165,9 +165,12 @@ const PropertyListScreen = ({ navigation }) => {
       Alert.alert('Error', error);
     }
 
-    Alert.alert('Success', 'Property created successfully');
-
-    !loading && navigation.goBack();
+    Alert.alert('Success', 'Property created successfully', [
+      {
+        text: 'OK',
+        onPress: () => navigation.navigate('PropertyListScreen'),
+      },
+    ]);
   };
 
   return (
@@ -199,7 +202,22 @@ const PropertyListScreen = ({ navigation }) => {
       <TouchableOpacity
         disabled={loading}
         style={styles.button}
-        onPress={handleCreateProperty}
+        onPress={() =>
+          Alert.alert(
+            'Create property',
+            'Are you sure create property with these informations?\n \nThere are some informations can not be changed once the property is created.',
+            [
+              {
+                text: 'Cancel',
+                type: 'cancel',
+              },
+              {
+                text: 'OK',
+                onPress: handleCreateProperty(),
+              },
+            ]
+          )
+        }
       >
         {loading ? (
           <ActivityIndicator size="small" color="white" />

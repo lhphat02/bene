@@ -6,17 +6,21 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ThemeContext } from '../../context/ThemeContext';
 import getStyles from './styles';
 import Divider from '../../components/Divider';
+import { shortener } from '../../utils/formatter';
 
 const PropertyDetailScreen = ({ navigation, route }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const { data } = route.params;
   const styles = getStyles(isDarkMode);
+  const isImageUrl = data.image
+    ? shortener(data.image, 4) === 'http...'
+    : false;
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.back_button}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate('PropertyList')}
       >
         <Ionicons
           name="arrow-back"
@@ -29,7 +33,7 @@ const PropertyDetailScreen = ({ navigation, route }) => {
         <Image
           style={styles.image}
           source={
-            data?.image
+            isImageUrl
               ? {
                   uri: data?.image,
                 }
@@ -38,8 +42,8 @@ const PropertyDetailScreen = ({ navigation, route }) => {
         />
         <Text style={styles.header}>{data?.property_name || 'House'}</Text>
 
-        <Text style={styles.rating}>
-          Price per night: {data?.price_per_night || 'Price'}
+        <Text style={styles.header}>
+          Price per night: $ {data?.price_per_night || 'Price'}
         </Text>
 
         <Text style={styles.description}>
@@ -63,7 +67,12 @@ const PropertyDetailScreen = ({ navigation, route }) => {
         <Text style={styles.text}>Home type: {data?.type || 'Type'}</Text>
       </ScrollView>
 
-      <TouchableOpacity style={styles.book_button} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.book_button}
+        onPress={() => {
+          navigation.navigate('EditProperty', { data: data });
+        }}
+      >
         <Ionicons name="create" size={24} color="white" />
         <Text style={styles.book_button_text}>Edit Property</Text>
       </TouchableOpacity>

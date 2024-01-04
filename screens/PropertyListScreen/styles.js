@@ -11,7 +11,6 @@ const getStyles = (isDarkMode) =>
       alignItems: 'center',
       padding: 20,
       overflow: 'visible',
-
       backgroundColor: isDarkMode ? darkColors.background : 'white',
     },
     button: {

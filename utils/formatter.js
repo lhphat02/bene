@@ -14,10 +14,15 @@ export const shortener = (str, len) => {
 /**
  * Formats a date into a string representation.
  * @param {Date} date - The date to be formatted.
+ * @param {string} format - Optional format for the date string (default: 'long').
  * @returns {string} The formatted date string.
  */
-export const formatDate = (date) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+export const formatDate = (date, format = 'long') => {
+  const options =
+    format === 'short'
+      ? { year: 'numeric', month: '2-digit', day: '2-digit' }
+      : { year: 'numeric', month: 'long', day: 'numeric' };
+
   return new Date(date).toLocaleDateString('en-US', options);
 };
 

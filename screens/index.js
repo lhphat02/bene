@@ -11,6 +11,7 @@ import NotificationDetailScreen from './NotificationDetailScreen';
 import PropertyDetailScreen from './PropertyDetailScreen';
 import PropertyListScreen from './PropertyListScreen';
 import AddPropertyScreen from './AddPropertyScreen';
+import EditPropertyScreen from './EditPropertyScreen';
 import SettingSceen from './SettingScreen';
 
 export {
@@ -27,5 +28,6 @@ export {
   PropertyDetailScreen,
   PropertyListScreen,
   AddPropertyScreen,
+  EditPropertyScreen,
   SettingSceen,
 };

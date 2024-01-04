@@ -19,6 +19,7 @@ import {
   PropertyListScreen,
   RegisterScreen,
   SearchScreen,
+  EditPropertyScreen,
   SettingSceen,
 } from '../../screens';
 import theme from '../../constants/theme';
@@ -163,6 +164,13 @@ const PropertyStack = () => {
         component={PropertyDetailScreen}
         options={{
           title: 'Accommodation detail',
+        }}
+      />
+      <Stack.Screen
+        name="EditProperty"
+        component={EditPropertyScreen}
+        options={{
+          title: 'Edit property',
         }}
       />
     </Stack.Navigator>

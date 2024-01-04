@@ -38,7 +38,7 @@ const AccomdtCard = ({ data, onCardClicked }) => {
           </Text>
         </View>
         <Text style={styles.price}>
-          Price: {data?.price_per_night || 'Price'}
+          Price: $ {data?.price_per_night || 'Price'}
         </Text>
       </View>
     </TouchableOpacity>

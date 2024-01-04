@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import getAllProperties from '../actions/getAllProperties';
-import getPropertyByKeyword from '../actions/getPropertyByKeyword';
-import createProperty from '../actions/createProperty';
+import {
+  createProperty,
+  editProperty,
+  getAllProperties,
+  getPropertyByKeyword,
+  getPropertyByUserId,
+} from '../actions';
 
 const initialState = {
   properties: [],
   searchResult: [],
+  ownedProperties: [],
   loading: false,
   error: null,
 };
@@ -45,6 +50,20 @@ const propertySlice = createSlice({
         state.error = action.payload.message;
       })
 
+      // Get property by user id
+      .addCase(getPropertyByUserId.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getPropertyByUserId.fulfilled, (state, action) => {
+        state.ownedProperties = action.payload.data;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(getPropertyByUserId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+
       // Create property
       .addCase(createProperty.pending, (state) => {
         state.loading = true;
@@ -54,6 +73,19 @@ const propertySlice = createSlice({
         state.error = null;
       })
       .addCase(createProperty.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+
+      // Edit property
+      .addCase(editProperty.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editProperty.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(editProperty.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

@@ -1,9 +1,12 @@
 import { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useDispatch } from 'react-redux';
 
 import { ThemeContext } from '../../context/ThemeContext';
+import useUserData from '../../hooks/useUser';
+import createBooking from '../../redux/features/bookings/actions/createBooking';
 import { formatDate, getDayCount } from '../../utils/formatter';
 import getStyles from './styles';
 
@@ -19,6 +22,9 @@ const dateInput = [
 ];
 
 const BookingScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const { userData } = useUserData();
+
   // Get the dark mode value from the ThemeContext
   const { isDarkMode } = useContext(ThemeContext);
 
@@ -33,10 +39,53 @@ const BookingScreen = ({ navigation, route }) => {
     checkin: false,
     checkout: false,
   });
-  const [date, setDate] = useState({
+  const [formData, setFormData] = useState({
     checkin: new Date(),
     checkout: new Date(),
+    guests: '',
   });
+
+  const handleInputChange = (name) => (text) => {
+    // Validate if the input is a number and lower than max_guests
+    if (parseInt(text) <= data.max_guests) {
+      setFormData({ ...formData, [name]: text });
+    }
+
+    // If the input is not a number or higher than max_guests, show an alert
+    if (parseInt(text) > data.max_guests || parseInt(text) <= 0) {
+      setFormData({ ...formData, [name]: '' });
+      Alert.alert(
+        'Invalid input',
+        'The number of guests must be lower than max guests and higher than 0'
+      );
+    }
+  };
+
+  const handleCreateBooking = () => {
+    // Validate the form data
+    const { checkin, checkout, guests } = formData;
+    if (!checkin || !checkout || !guests) {
+      Alert.alert('Invalid input', 'Please fill in all the fields');
+      return;
+    }
+
+    const bodyParams = {
+      user_id: userData._id,
+      property_id: data._id,
+      check_in_date: formatDate(formData.checkin, 'short'),
+      check_out_date: formatDate(formData.checkout, 'short'),
+      guests: formData.guests,
+      total_price:
+        getDayCount(formData.checkin, formData.checkout) * data.price_per_night,
+      booking_status: 'pending',
+    };
+
+    // Create the booking
+    dispatch(createBooking(bodyParams));
+  };
+
+  // console.log('BookingScreen form data: ', formData);
+  // console.log('BookingScreen route data: ', data);
 
   return (
     <View style={styles.container}>
@@ -69,15 +118,15 @@ const BookingScreen = ({ navigation, route }) => {
             {/* Date picker */}
             {showDatePicker[item.name] && (
               <DateTimePicker
-                minimumDate={item.name === 'checkout' ? date.checkin : null}
-                disabled={item.name === 'checkout' && !date.checkin}
+                minimumDate={item.name === 'checkout' ? formData.checkin : null}
+                disabled={item.name === 'checkout' && !formData.checkin}
                 value={new Date()}
                 mode="date"
                 display="default"
                 onChange={(value) => {
                   setShowDatePicker({ ...showDatePicker, [item.name]: false });
-                  setDate({
-                    ...date,
+                  setFormData({
+                    ...formData,
                     [item.name]: value.nativeEvent.timestamp,
                   });
                 }}
@@ -85,13 +134,27 @@ const BookingScreen = ({ navigation, route }) => {
             )}
 
             {/* Display selected date */}
-            {date[item.name] && (
+            {formData[item.name] && (
               <Text style={styles.date_display}>
-                {formatDate(date[item.name])}
+                {formatDate(formData[item.name])}
               </Text>
             )}
           </View>
         ))}
+
+        {/* Number of guests */}
+        <View style={styles.textInput_container}>
+          <Text style={styles.label}>
+            Number of guests (Max guest: {data.max_guests})
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Number of guests"
+            placeholderTextColor={isDarkMode ? 'white' : 'black'}
+            keyboardType="numeric"
+            onChangeText={handleInputChange('guests')}
+          />
+        </View>
 
         {/* Price per night */}
         <Text style={styles.text}>
@@ -101,12 +164,14 @@ const BookingScreen = ({ navigation, route }) => {
         {/* Total price */}
         <Text style={styles.text}>
           Total: {''}
-          {getDayCount(date.checkin, date.checkout) * data.price_per_night} $
+          {getDayCount(formData.checkin, formData.checkout) *
+            data.price_per_night}{' '}
+          $
         </Text>
       </View>
 
       {/* Reserve button */}
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
+      <TouchableOpacity style={styles.button} onPress={handleCreateBooking}>
         <Ionicons name="checkmark-circle" size={24} color="white" />
         <Text style={styles.button_text}>Reserve your home</Text>
       </TouchableOpacity>

@@ -98,11 +98,64 @@ export const CONSTANTS = {
        * @returns {Object[]} response.data.data - The list of properties.
        */
       GET_BY_KEYWORD: `property/getPropertyBySearchphase`,
+
+      /**
+       * The endpoint for getting property by id.
+       *
+       * @url http://host/property/getPropertyByUserId
+       * @method GET
+       * @param {string} user_id - The host id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The property data.
+       */
+      GET_BY_HOST_ID: `property/getPropertyByUserId`,
+
+      /**
+       * The endpoint for updating a property.
+       *
+       * @url http://host/property/editProperty
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.user_id - The user id.
+       * @param {string} data.property_name - The property name.
+       * @param {string} data.description - The description.
+       * @param {string} data.address - The address.
+       * @param {number} data.price_per_night - The price per night.
+       * @param {number} data.max_guests - The maximum number of guests.
+       * @param {number} data.beds - The number of beds.
+       * @param {number} data.bedrooms - The number of bedrooms.
+       * @param {number} data.size - The size.
+       * @param {string} data.availability - The availability.
+       * @param {string} data.long_lat - The longitude and latitude.
+       * @param {string} data.image - The image.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The property data.
+       */
       EDIT: `property/editProperty`,
+
       DELETE: `property/deleteProperty`,
     },
     BOOKING: {
-      CREATE: `booking/createBooking`,
+      /**
+       * The endpoint for creating a booking.
+       *
+       * @url http://host/booking/createBookingWithNoti
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.user_id - The user id.
+       * @param {string} data.property_id - The property id.
+       * @param {string} data.check_in_date - The checkin date.
+       * @param {string} data.check_out_date - The checkout date.
+       * @param {number} data.total_price - The total price.
+       * @param {number} data.guests - The number of guests.
+       * @param {string} data.booking_status - The status.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The booking data.
+       */
+      CREATE: `booking/createBookingWithNoti`,
       GET_ALL: `booking/getAllBookings`,
       UPDATE: `booking/updateBooking`,
       DELETE: `booking/deleteBooking`,
