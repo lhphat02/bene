@@ -238,6 +238,30 @@ router.get("/getBookingById", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/getBookingByUserIdPropId", verifyToken, async (req, res) => {
+  try {
+    const user_id = req.query.user_id;
+    const property_id = req.query.property_id;
+    const query = { user_id: user_id, property_id: property_id };
+    console.log(query);
+    let collection = await db.collection("booking");
+    let results = await collection.findOne(query);
+
+    res.status(200).send({
+      statusCode: 1,
+      message: "Get Booking successfully",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      statusCode: 0,
+      message: "Get Booking failed",
+      data: null,
+    });
+  }
+});
+
 
 
 export default router;
