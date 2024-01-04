@@ -1,24 +1,41 @@
 import { StyleSheet } from 'react-native';
 import theme from '../../constants/theme';
 
-const { colors } = theme;
+const { colors, darkColors } = theme;
 
-const getStyles = (isDarkMode, height, width) =>
+const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
-      height: height || 80,
-      width: width || 80,
-      borderRadius: 999,
-      borderWidth: 4,
-      borderColor: colors.primary,
+      width: '100%',
+      padding: 20,
+      gap: 10,
+      marginVertical: 10,
       justifyContent: 'center',
-      backgroundColor: isDarkMode ? '#171717' : 'white',
+      alignItems: 'flex-start',
+      shadowColor: isDarkMode ? darkColors.primary : 'gray',
+      borderRadius: 10,
+      elevation: 10,
+      backgroundColor: isDarkMode ? darkColors.tertiary : 'white',
     },
-    text: {
-      fontSize: height * 0.25 || 20,
+    title: {
+      fontSize: 20,
       fontWeight: '900',
       textAlign: 'center',
-      color: colors.primary,
+      color: isDarkMode ? colors.tertiary : colors.primary,
+    },
+    text: {
+      fontSize: 20,
+      textAlign: 'center',
+      color: isDarkMode ? 'white' : 'gray',
+    },
+    bubble: {
+      position: 'absolute',
+      top: -5,
+      right: -5,
+      width: 15,
+      height: 15,
+      borderRadius: 7.5,
+      backgroundColor: colors.tertiary,
     },
   });
 

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import theme from '../../constants/theme';
 
 const { colors, darkColors } = theme;
@@ -7,21 +8,20 @@ const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
       flex: 1,
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
       gap: 10,
-      padding: 20,
-      backgroundColor: isDarkMode ? darkColors.background : 'white',
+      paddingHorizontal: 20,
     },
-    header: {
-      fontSize: 24,
-      fontWeight: '900',
-      textAlign: 'center',
-      marginTop: 50,
-      color: colors.tertiary,
+    list: {
+      width: '100%',
+      overflow: 'visible',
+      flex: 1,
     },
     text: {
-      marginTop: 20,
       textAlign: 'center',
-      fontSize: 16,
+      fontSize: 24,
       color: isDarkMode ? 'white' : 'gray',
     },
   });

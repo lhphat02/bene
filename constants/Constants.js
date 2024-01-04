@@ -194,6 +194,21 @@ export const CONSTANTS = {
       UPDATE: `booking/updateBooking`,
       DELETE: `booking/deleteBooking`,
     },
+    NOTIFICATION: {
+      /**
+       * The endpoint for creating a notification.
+       *
+       * @url http://host/notification/createNotification
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.user_id - The user id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The notification list of user.
+       */
+      GET_BY_USER_ID: `notification/getNotificationByUserId`,
+      UPDATE: `notification/updateNotification`,
+    },
   },
   FUNCTIONS: {
     AXIOS: {
