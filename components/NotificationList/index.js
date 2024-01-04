@@ -3,36 +3,33 @@ import { View, Text, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import AccomdtCard from '../AccomdtCard';
 import Loading from '../Loading';
 import getAllProperties from '../../redux/features/properties/actions/getAllProperties';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
 import { getLocalData } from '../../utils/helper/user';
+import NotiTab from '../NotificationTab';
+import getUserNotification from '../../redux/features/notifications/actions/getUserNotification';
 
 const NotificationList = () => {
   const dispatch = useDispatch();
   const { isDarkMode } = useContext(ThemeContext);
   const error = useSelector((state) => state.notification.error);
   const loading = useSelector((state) => state.notification.loading);
-  const data = useSelector((state) => state.notification.notifications);
+  const notifications = useSelector(
+    (state) => state.notification.notifications
+  );
   const navigation = useNavigation();
   const styles = useMemo(() => getStyles(isDarkMode), [isDarkMode]);
-  const userId = useMemo(async () => await getLocalData('userId'), []);
 
-  const fetchProperties = useCallback(() => {
-    dispatch(getAllProperties());
+  const fetchNotification = useCallback(async () => {
+    const userId = await getLocalData('userId');
+    dispatch(getUserNotification(userId));
   }, [dispatch]);
 
   useEffect(() => {
-    fetchProperties();
-
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchProperties();
-    });
-
-    return unsubscribe;
-  }, [fetchProperties, navigation]);
+    fetchNotification();
+  }, [fetchNotification]);
 
   if (loading) {
     return (
@@ -50,10 +47,10 @@ const NotificationList = () => {
     );
   }
 
-  if (!data.length) {
+  if (!notifications.length) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>No result</Text>
+        <Text style={styles.text}>You don't have any notification</Text>
       </View>
     );
   }
@@ -62,35 +59,8 @@ const NotificationList = () => {
     <View style={styles.list}>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={data}
-        renderItem={({ item }) => (
-          <AccomdtCard
-            data={item}
-            onCardClicked={() => {
-              if (userId._j === item?.user_id) {
-                return navigation.navigate('AccomdtTopTab', {
-                  screen: 'PropertyStack',
-                  params: {
-                    screen: 'PropertyDetail',
-                    params: {
-                      data: item,
-                    },
-                  },
-                });
-              }
-
-              navigation.navigate('AccomdtTopTab', {
-                screen: 'AccomdtStack',
-                params: {
-                  screen: 'AccomdtDetail',
-                  params: {
-                    data: item,
-                  },
-                },
-              });
-            }}
-          />
-        )}
+        data={notifications}
+        renderItem={({ item }) => <NotiTab data={item} />}
         keyExtractor={(item) => item._id}
       />
     </View>

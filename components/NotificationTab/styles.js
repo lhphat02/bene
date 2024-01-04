@@ -6,9 +6,10 @@ const { colors, darkColors } = theme;
 const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
-      width: '100%',
+      width: '94%',
       padding: 20,
       gap: 10,
+      marginLeft: 10,
       marginVertical: 10,
       justifyContent: 'center',
       alignItems: 'flex-start',
@@ -17,6 +18,19 @@ const getStyles = (isDarkMode) =>
       elevation: 10,
       backgroundColor: isDarkMode ? darkColors.tertiary : 'white',
     },
+    container_seen: {
+      width: '94%',
+      padding: 20,
+      gap: 10,
+      marginLeft: 10,
+      marginVertical: 10,
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      shadowColor: isDarkMode ? darkColors.primary : 'gray',
+      borderRadius: 10,
+      elevation: 10,
+      backgroundColor: isDarkMode ? darkColors.secondary : 'white',
+    },
     title: {
       fontSize: 20,
       fontWeight: '900',
@@ -24,7 +38,7 @@ const getStyles = (isDarkMode) =>
       color: isDarkMode ? colors.tertiary : colors.primary,
     },
     text: {
-      fontSize: 20,
+      fontSize: 16,
       textAlign: 'center',
       color: isDarkMode ? 'white' : 'gray',
     },

@@ -8,7 +8,8 @@ const getStyles = (isDarkMode) =>
     container: {
       flex: 1,
       gap: 10,
-      padding: 20,
+      paddingVertical: 20,
+      paddingHorizontal: 8,
       backgroundColor: isDarkMode ? darkColors.background : 'white',
     },
     header: {

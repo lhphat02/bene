@@ -11,10 +11,12 @@ const getStyles = (isDarkMode) =>
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      overflow: 'visible',
       gap: 10,
       paddingHorizontal: 20,
     },
     list: {
+      flexDirection: 'column',
       width: '100%',
       overflow: 'visible',
       flex: 1,

@@ -11,7 +11,7 @@ const getUserNotification = createAsyncThunk(
   'notification/getUserNotification',
   async (userId, { rejectWithValue }) => {
     try {
-      console.log('Get user notification data: ', data);
+      console.log('Get user notification data: ', userId);
 
       // Make the API call
       const response = await CONSTANTS.FUNCTIONS.AXIOS.GET(

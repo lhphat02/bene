@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
 import { NotiTab } from '../../components';
+import NotificationList from '../../components/NotificationList';
 
 const NotificationScreen = () => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -12,7 +13,7 @@ const NotificationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <NotiTab />
+      <NotificationList />
     </View>
   );
 };
