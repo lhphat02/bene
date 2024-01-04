@@ -193,13 +193,6 @@ const AccomdtStack = () => {
     >
       <Stack.Screen name="Search" component={SearchScreen} options={{}} />
       <Stack.Screen
-        name="AccomdtList"
-        component={AccomdtListScreen}
-        options={{
-          title: 'Add property',
-        }}
-      />
-      <Stack.Screen
         name="AccomdtDetail"
         component={AccomdtDetailScreen}
         options={{

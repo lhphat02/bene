@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ThemeContext } from '../../context/ThemeContext';
 import useUserData from '../../hooks/useUser';
@@ -24,6 +24,9 @@ const dateInput = [
 const BookingScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { userData } = useUserData();
+
+  const loading = useSelector((state) => state.booking.loading);
+  const error = useSelector((state) => state.booking.error);
 
   // Get the dark mode value from the ThemeContext
   const { isDarkMode } = useContext(ThemeContext);
@@ -82,6 +85,18 @@ const BookingScreen = ({ navigation, route }) => {
 
     // Create the booking
     dispatch(createBooking(bodyParams));
+
+    if (error) {
+      Alert.alert('Error', error);
+      return;
+    }
+
+    Alert.alert('Success', 'Booking successfully', [
+      {
+        text: 'OK',
+        onPress: () => navigation.navigate('Search'),
+      },
+    ]);
   };
 
   // console.log('BookingScreen form data: ', formData);

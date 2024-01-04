@@ -163,6 +163,7 @@ const PropertyListScreen = ({ navigation }) => {
 
     if (error) {
       Alert.alert('Error', error);
+      return;
     }
 
     Alert.alert('Success', 'Property created successfully', [
