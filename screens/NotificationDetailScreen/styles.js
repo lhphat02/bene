@@ -1,41 +1,71 @@
 import { StyleSheet } from 'react-native';
+import theme from '../../constants/theme';
 
-//20520683 - Luu Huynh Phat
-const getStyles = (isDarkMode, fontSize) =>
+const { colors, darkColors } = theme;
+
+const getStyles = (isDarkMode) =>
   StyleSheet.create({
     container: {
       flex: 1,
       gap: 10,
-      paddingHorizontal: 20,
-      backgroundColor: isDarkMode ? '#171717' : '#fff',
+      padding: 20,
+      backgroundColor: isDarkMode ? darkColors.background : 'white',
     },
     header: {
-      fontSize: fontSize + 4 || 24,
+      fontSize: 24,
       fontWeight: '900',
       textAlign: 'center',
-      marginTop: 50,
-      color: 'orange',
+      color: colors.tertiary,
+    },
+    scrollview: {
+      // paddingVertical: 20,
+      gap: 10,
+    },
+    image: {
+      borderRadius: 10,
+      height: 160,
+      width: '100%',
+    },
+    label: {
+      marginTop: 20,
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: isDarkMode ? 'white' : 'black',
     },
     text: {
-      marginTop: 20,
-      textAlign: 'center',
-      fontSize: fontSize || 16,
+      marginTop: 10,
+      fontSize: 20,
       color: isDarkMode ? 'white' : 'gray',
     },
-    addTaskBar: {
+    status_text: {
+      marginLeft: 10,
+      paddingLeft: 10,
+      fontSize: 20,
+      color: colors.tertiary,
+    },
+    buttonContainer: {
+      width: '100%',
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      // marginHorizontal: 20,
+      marginTop: 20,
+      backgroundColor: isDarkMode ? darkColors.background : 'white',
     },
-    title: {
-      fontSize: fontSize + 8 || 20,
-      fontWeight: '600',
-      color: isDarkMode ? 'white' : 'gray',
+    button: {
+      width: '48%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: isDarkMode ? 'white' : 'black',
+      gap: 10,
+      padding: 10,
+      borderRadius: 10,
+      backgroundColor: colors.primary,
     },
-    taskList: {
-      flex: 1,
-      marginTop: 10,
+    button_text: {
+      fontSize: 16,
+      fontWeight: '900',
+      color: 'white',
     },
   });
 

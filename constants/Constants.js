@@ -112,6 +112,18 @@ export const CONSTANTS = {
       GET_BY_HOST_ID: `property/getPropertyByUserId`,
 
       /**
+       * The endpoint for getting property by id.
+       *
+       * @url http://host/property/getPropertyById
+       * @method GET
+       * @param {string} property_id - The property id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The property data.
+       */
+      GET_BY_ID: `property/getPropertyById`,
+
+      /**
        * The endpoint for updating a property.
        *
        * @url http://host/property/editProperty
@@ -169,6 +181,18 @@ export const CONSTANTS = {
        * @returns {Object} response.data.data - The booking data.
        */
       GET_BY_USER_PROP_ID: `booking/getBookingByUserIdPropId`,
+
+      /**
+       * The endpoint for getting booking by user id.
+       *
+       * @url http://host/booking/getBookingByUserId
+       * @method GET
+       * @param {string} user_id - The user id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object[]} response.data.data - The booking data.
+       */
+      GET_BY_ID: `booking/getBookingById`,
 
       /**
        * The endpoint for getting all bookings.

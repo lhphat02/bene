@@ -14,6 +14,7 @@ import getUserNotification from '../../redux/features/notifications/actions/getU
 const NotificationList = () => {
   const dispatch = useDispatch();
   const { isDarkMode } = useContext(ThemeContext);
+
   const error = useSelector((state) => state.notification.error);
   const loading = useSelector((state) => state.notification.loading);
   const notifications = useSelector(
@@ -29,6 +30,12 @@ const NotificationList = () => {
 
   useEffect(() => {
     fetchNotification();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchNotification();
+    });
+
+    return unsubscribe;
   }, [fetchNotification]);
 
   if (loading) {
