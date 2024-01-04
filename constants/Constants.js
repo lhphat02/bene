@@ -156,7 +156,41 @@ export const CONSTANTS = {
        * @returns {Object} response.data.data - The booking data.
        */
       CREATE: `booking/createBookingWithNoti`,
+
+      /**
+       * The endpoint for getting booking by user id and property id.
+       *
+       * @url http://host/booking/getBookingByUserIdPropId
+       * @method GET
+       * @param {string} user_id - The user id.
+       * @param {string} property_id - The property id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The booking data.
+       */
+      GET_BY_USER_PROP_ID: `booking/getBookingByUserIdPropId`,
+
+      /**
+       * The endpoint for getting all bookings.
+       *
+       * @url http://host/booking/getAllBookings
+       * @method GET
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object[]} response.data.data - The list of bookings.
+       */
       GET_ALL: `booking/getAllBookings`,
+
+      /**
+       * The endpoint for getting booking by id.
+       *
+       * @url http://host/booking/getBookingById
+       * @method GET
+       * @param {string} booking_id - The booking id.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The booking data.
+       */
       UPDATE: `booking/updateBooking`,
       DELETE: `booking/deleteBooking`,
     },

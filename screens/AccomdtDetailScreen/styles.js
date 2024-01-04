@@ -43,6 +43,15 @@ const getStyles = (isDarkMode) =>
       borderRadius: 10,
       backgroundColor: colors.primary,
     },
+    book_button_isbooked: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+      padding: 10,
+      borderRadius: 10,
+      backgroundColor: darkColors.secondary,
+    },
     button_text: {
       fontSize: 16,
       fontWeight: '900',

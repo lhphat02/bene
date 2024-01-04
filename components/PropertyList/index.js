@@ -42,8 +42,6 @@ const PropertyList = () => {
     navigation.navigate('AccomdtDetail', { data: item });
   };
 
-  console.log('User ID: ', userId);
-
   if (loading) {
     return (
       <View style={styles.container}>

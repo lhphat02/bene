@@ -23,16 +23,18 @@ const dateInput = [
 
 const BookingScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
+
+  // Get the user data from the useUserData hook
   const { userData } = useUserData();
+
+  // Get the data from the route params
+  const { data } = route.params;
 
   const loading = useSelector((state) => state.booking.loading);
   const error = useSelector((state) => state.booking.error);
 
   // Get the dark mode value from the ThemeContext
   const { isDarkMode } = useContext(ThemeContext);
-
-  // Get the data from the route params
-  const { data } = route.params;
 
   // Get the styles based on the dark mode value
   const styles = getStyles(isDarkMode);
