@@ -107,4 +107,31 @@ router.get("/getNotificationByUserId", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/updateNotification", verifyToken, async (req, res) => {
+  try {
+    const { noti_id, seen } = req.body;
+
+    const query = { _id: new ObjectId(noti_id) };
+    const update = {
+      $set: {
+        seen: seen,
+      },
+    };
+
+    let collection = await db.collection("notification");
+    let results = await collection.updateOne(query, update);
+
+    res.status(200).send({
+      statusCode: 1,
+      message: "Update notification successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      statusCode: 0,
+      message: "Update notification failed",
+      data: null,
+    });
+  }
+});
+
 export default router;
