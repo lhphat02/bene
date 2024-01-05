@@ -90,19 +90,11 @@ router.post("/updateBooking", verifyToken, async (req, res) => {
   try {
     const {
       booking_id,
-      check_in_date,
-      check_out_date,
-      guests,
-      total_price,
       booking_status,
     } = req.body;
 
     const booking = {
       $set: {
-        check_in_date,
-        check_out_date,
-        guests,
-        total_price,
         booking_date: new Date(),
         booking_status,
       },
