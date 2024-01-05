@@ -16,7 +16,7 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <SettingToggle
-        title={t('Dark Mode')}
+        title={t('settings.darkMode')}
         isEnabled={isDarkMode}
         toggleHandler={changeDarkMode}
       />

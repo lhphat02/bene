@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -45,7 +46,17 @@ const LoginScreen = ({ navigation }) => {
   };
 
   if (error) {
-    alert(error);
+    Alert.alert(
+      'Error',
+      error,
+      [
+        {
+          text: 'OK',
+          onPress: () => dispatch({ type: 'auth/clearError' }),
+        },
+      ],
+      { cancelable: true }
+    );
   }
 
   return (

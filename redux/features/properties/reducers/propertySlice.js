@@ -11,6 +11,7 @@ const initialState = {
   properties: [],
   searchResult: [],
   ownedProperties: [],
+  nearbyProperties: [],
   loading: false,
   error: null,
 };

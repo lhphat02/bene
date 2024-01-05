@@ -4,6 +4,7 @@ import * as Location from 'expo-location';
 const useLocation = () => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -18,13 +19,15 @@ const useLocation = () => {
         setLocation(locationData);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     getLocation();
   }, []);
 
-  return { location, error };
+  return { location, error, loading };
 };
 
 export default useLocation;

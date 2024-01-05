@@ -10,17 +10,21 @@ import Loading from '../Loading';
 import getPropertyByKeyword from '../../redux/features/properties/actions/getPropertyByKeyword';
 import useUserData from '../../hooks/useUser';
 import getStyles from './styles';
+import { useTranslation } from 'react-i18next';
 
 const SearchResultList = ({ keyword }) => {
   const dispatch = useDispatch();
   const { isDarkMode } = useContext(ThemeContext);
+
   const error = useSelector((state) => state.property.error);
   const loading = useSelector((state) => state.property.loading);
   const result = useSelector((state) => state.property.searchResult);
+
   const navigation = useNavigation();
   const debouncedKeyword = useDebounce(keyword, 1000);
   const styles = useMemo(() => getStyles(isDarkMode), [isDarkMode]);
   const { userData } = useUserData();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!debouncedKeyword) return;
@@ -47,7 +51,7 @@ const SearchResultList = ({ keyword }) => {
   if (!keyword) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Search your ideal home</Text>
+        <Text style={styles.text}>{t('search.searchYourIdealHome')}</Text>
       </View>
     );
   }
@@ -55,7 +59,7 @@ const SearchResultList = ({ keyword }) => {
   if (!result.length) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>No result</Text>
+        <Text style={styles.text}>{t('search.noResults')}</Text>
       </View>
     );
   }

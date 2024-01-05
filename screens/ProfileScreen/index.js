@@ -50,9 +50,15 @@ const ProfileScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.profile_detail}>
-          <Text style={styles.text}>Username: {userData?.username}</Text>
-          <Text style={styles.text}>Email: {userData?.email}</Text>
-          <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
+          <Text style={styles.text}>
+            {t('profile.username')}: {userData?.username}
+          </Text>
+          <Text style={styles.text}>
+            {t('profile.email')}: {userData?.email}
+          </Text>
+          <Text style={styles.text}>
+            {t('profile.phone')}: {userData?.phoneNumber}
+          </Text>
         </View>
       </View>
 
@@ -61,12 +67,12 @@ const ProfileScreen = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate('Setting')}
         >
-          <Text style={styles.buttonText}>Setting</Text>
+          <Text style={styles.buttonText}>{t('settings.title')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Ionicons name="log-out-outline" size={24} color="white" />
-          <Text style={styles.buttonText}>Log out</Text>
+          <Text style={styles.buttonText}>{t('profile.logout')}</Text>
         </TouchableOpacity>
       </View>
     </View>

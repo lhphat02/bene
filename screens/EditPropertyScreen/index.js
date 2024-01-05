@@ -52,11 +52,12 @@ const formInput = [
 ];
 
 const EditPropertyScreen = ({ navigation, route }) => {
-  const { isDarkMode } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.property.loading);
   const error = useSelector((state) => state.property.error);
 
+  const { t } = useTranslation();
+  const { isDarkMode } = useContext(ThemeContext);
   const styles = getStyles(isDarkMode);
   const { data } = route.params;
   const [formData, setFormData] = useState({
@@ -137,7 +138,7 @@ const EditPropertyScreen = ({ navigation, route }) => {
             color={isDarkMode ? 'white' : 'black'}
           />
         </TouchableOpacity>
-        <Text style={styles.title}>Edit property</Text>
+        <Text style={styles.title}>{t('property.edit')}</Text>
       </View>
 
       <ScrollView style={styles.list} contentContainerStyle={styles.form}>

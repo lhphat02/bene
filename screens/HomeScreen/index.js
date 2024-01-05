@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
-import PropertyList from '../../components/PropertyList';
+
+import NearbyPropertyList from '../../components/NearbyPropertyList';
 
 const HomeScreen = ({ navigation }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -12,8 +13,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recommend for you</Text>
-      <PropertyList />
+      <Text style={styles.title}>{t('home.recommended')}</Text>
+
+      <NearbyPropertyList />
     </View>
   );
 };

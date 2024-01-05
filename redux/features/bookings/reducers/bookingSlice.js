@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import createBooking from '../actions/createBooking';
+import updateBookingStatus from '../actions/updateBookingStatus';
 
 const initialState = {
   bookings: [],
@@ -23,6 +24,19 @@ const bookingSlice = createSlice({
         state.error = null;
       })
       .addCase(createBooking.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+
+      // Update booking status
+      .addCase(updateBookingStatus.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateBookingStatus.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(updateBookingStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

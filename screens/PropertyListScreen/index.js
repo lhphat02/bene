@@ -22,7 +22,7 @@ const PropertyListScreen = ({ navigation }) => {
       >
         <Ionicons name="add" size={24} color="white" />
 
-        <Text style={styles.button_text}>Create new property</Text>
+        <Text style={styles.button_text}>{t('property.create')}</Text>
       </TouchableOpacity>
     </View>
   );

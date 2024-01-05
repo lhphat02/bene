@@ -15,11 +15,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../context/ThemeContext';
 import { getLocationFromAddress } from '../../utils/helper/location';
 import { getLocalData } from '../../utils/helper/user';
-import getStyles from './styles';
 import { formatLongLat } from '../../utils/formatter';
+import { getRandomHouseImage } from '../../utils/helper/property';
 import useDebounce from '../../hooks/useDebounce';
 import createProperty from '../../redux/features/properties/actions/createProperty';
-import { getRandomHouseImage } from '../../utils/helper/property';
+import getStyles from './styles';
 
 const formInput = [
   {
@@ -57,12 +57,15 @@ const formInput = [
 ];
 
 const PropertyListScreen = ({ navigation }) => {
-  const { isDarkMode } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.property.loading);
   const error = useSelector((state) => state.property.error);
+
   const { t } = useTranslation();
+  const { isDarkMode } = useContext(ThemeContext);
+
   const styles = getStyles(isDarkMode);
+
   const [formData, setFormData] = useState({
     user_id: '',
     property_name: '',
@@ -77,7 +80,12 @@ const PropertyListScreen = ({ navigation }) => {
     availability: 1,
     image: getRandomHouseImage(),
   });
-  const debouncedAddress = useDebounce(formData.address, 1000);
+
+  const debouncedAddress = useDebounce(formData.address, 3000);
+
+  const handleInputChange = (name) => (text) => {
+    setFormData({ ...formData, [name]: text });
+  };
 
   useEffect(() => {
     const initializeFormData = async () => {
@@ -87,10 +95,6 @@ const PropertyListScreen = ({ navigation }) => {
 
     initializeFormData();
   }, []);
-
-  const handleInputChange = (name) => (text) => {
-    setFormData({ ...formData, [name]: text });
-  };
 
   useEffect(() => {
     if (debouncedAddress) {
@@ -169,7 +173,7 @@ const PropertyListScreen = ({ navigation }) => {
     Alert.alert('Success', 'Property created successfully', [
       {
         text: 'OK',
-        onPress: () => navigation.navigate('PropertyListScreen'),
+        onPress: () => navigation.navigate('PropertyList'),
       },
     ]);
   };
@@ -187,7 +191,7 @@ const PropertyListScreen = ({ navigation }) => {
             color={isDarkMode ? 'white' : 'black'}
           />
         </TouchableOpacity>
-        <Text style={styles.title}>Add new property</Text>
+        <Text style={styles.title}>{t('property.create')}</Text>
       </View>
       <ScrollView style={styles.list} contentContainerStyle={styles.form}>
         {formInput.map((item, index) => (
@@ -214,7 +218,7 @@ const PropertyListScreen = ({ navigation }) => {
               },
               {
                 text: 'OK',
-                onPress: handleCreateProperty(),
+                onPress: handleCreateProperty,
               },
             ]
           )
@@ -225,7 +229,7 @@ const PropertyListScreen = ({ navigation }) => {
         ) : (
           <Ionicons name="add" size={24} color="white" />
         )}
-        <Text style={styles.button_text}>Create</Text>
+        <Text style={styles.button_text}>{t('common.submit')}</Text>
       </TouchableOpacity>
     </View>
   );

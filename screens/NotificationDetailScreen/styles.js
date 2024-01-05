@@ -48,7 +48,7 @@ const getStyles = (isDarkMode) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginTop: 20,
+      marginTop: 10,
       backgroundColor: isDarkMode ? darkColors.background : 'white',
     },
     button: {
@@ -62,10 +62,28 @@ const getStyles = (isDarkMode) =>
       borderRadius: 10,
       backgroundColor: colors.primary,
     },
+    button_accepted: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: isDarkMode ? 'white' : 'black',
+      gap: 10,
+      padding: 10,
+      borderRadius: 10,
+      borderWidth: 2,
+      borderColor: isDarkMode ? 'white' : 'black',
+      // backgroundColor: colors.primary,
+    },
     button_text: {
       fontSize: 16,
       fontWeight: '900',
       color: 'white',
+    },
+    button_text_accepted: {
+      fontSize: 16,
+      fontWeight: '900',
+      color: isDarkMode ? 'white' : 'black',
     },
   });
 

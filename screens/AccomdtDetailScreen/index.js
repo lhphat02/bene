@@ -6,14 +6,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { ThemeContext } from '../../context/ThemeContext';
 import { shortener } from '../../utils/formatter';
 import { checkPropertyIsBooked } from '../../utils/helper/property';
-import useUserData from '../../hooks/useUser';
 import Divider from '../../components/Divider';
 import getStyles from './styles';
 
 const AccomdtDetailScreen = ({ navigation, route }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const { data } = route.params;
-  const { userData } = useUserData();
+
+  const { t } = useTranslation();
   const styles = getStyles(isDarkMode);
   const [isBooked, setIsBooked] = useState(false);
 
@@ -34,6 +34,8 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
   const handleOnBook = () => {
     navigation.navigate('Booking', { data: data });
   };
+
+  console.log('data', data);
 
   return (
     <View style={styles.container}>
@@ -61,30 +63,30 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
         />
         <Text style={styles.header}>{data?.property_name || 'House'}</Text>
 
-        <Text style={styles.rating}>Rating: {data?.rating || '5'}</Text>
+        <Text style={styles.header}>
+          {t('property.pricePerNight')}: $ {data?.price_per_night || 'Price'}
+        </Text>
 
         <Text style={styles.description}>
           {data?.description || 'Description'}
         </Text>
 
-        <Divider dividerText="Detail" color={isDarkMode ? 'white' : 'black'} />
-
-        <Text style={styles.text}>Location: {data?.address || 'Address'}</Text>
-
-        <Text style={styles.text}>Size: {data?.size || 'Size'}</Text>
+        <Divider color={isDarkMode ? 'white' : 'black'} />
 
         <Text style={styles.text}>
-          Total bedrooms: {data?.bedrooms || 'Bedrooms'}
+          {t('property.location')}: {data?.address || 'Address'}
         </Text>
 
         <Text style={styles.text}>
-          Total beds: {data?.bed_count || 'Bed Count'}
+          {t('property.size')}: {data?.size || 'Size'} m²
         </Text>
 
-        <Text style={styles.text}>Home type: {data?.type || 'Type'}</Text>
+        <Text style={styles.text}>
+          {t('property.totalBedrooms')}: {data?.bedrooms || 'Bedrooms'}
+        </Text>
 
         <Text style={styles.text}>
-          Price per night: {data?.price_per_night || 'Price'}
+          {t('property.totalBeds')}: {data?.beds || 'Bed Count'}
         </Text>
       </ScrollView>
 
@@ -96,12 +98,14 @@ const AccomdtDetailScreen = ({ navigation, route }) => {
         {isBooked ? (
           <>
             <Ionicons name="checkmark" size={24} color="white" />
-            <Text style={styles.book_button_text}>Booked</Text>
+            <Text style={styles.book_button_text}>
+              {t('reservation.booked')}
+            </Text>
           </>
         ) : (
           <>
             <Ionicons name="calendar-sharp" size={24} color="white" />
-            <Text style={styles.book_button_text}>Book</Text>
+            <Text style={styles.book_button_text}>{t('reservation.book')}</Text>
           </>
         )}
       </TouchableOpacity>

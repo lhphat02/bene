@@ -5,12 +5,14 @@ import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import getStyles from './styles';
 import theme from '../../constants/theme';
+import { useTranslation } from 'react-i18next';
 
 const { colors } = theme;
 
 const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const styles = getStyles(isDarkMode);
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -29,7 +31,7 @@ const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
         {/* Input field */}
         <TextInput
           style={styles.input}
-          placeholder="Search"
+          placeholder={t('search.search')}
           placeholderTextColor={isDarkMode ? 'black' : 'white'}
           value={searchPhrase}
           onChangeText={setSearchPhrase}

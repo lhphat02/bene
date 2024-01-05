@@ -17,6 +17,12 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    setUserId: (state, action) => {
+      state.user_id = action.payload;
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -24,7 +30,7 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.user_id = action.payload.data._id;
+        state.user_id = action.payload.data.id;
         state.token = action.payload.data.token;
         state.error = null;
         state.loading = false;
@@ -60,6 +66,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken } = authSlice.actions;
+export const { setToken, setUserId, clearError } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -16,7 +16,7 @@ import ErrorDisplayer from './components/ErrorDisplayer';
 import Loading from './components/Loading';
 import { getLocalData } from './utils/helper/user';
 import { useEffect, useState } from 'react';
-import { setToken } from './redux/features/auth/reducers/authSlice';
+import { setToken, setUserId } from './redux/features/auth/reducers/authSlice';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -37,14 +37,24 @@ i18n.use(initReactI18next).init({
 const AppContent = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
+  const loading = useSelector((state) => state.auth.loading);
 
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const token = await getLocalData('token');
+        const [token, userId] = await Promise.all([
+          getLocalData('token'),
+          getLocalData('userId'),
+        ]);
 
         if (token) {
           dispatch(setToken(token));
+          console.log('Stored token: ', token);
+        }
+
+        if (userId) {
+          dispatch(setUserId(userId));
+          console.log('Stored user id: ', userId);
         }
       } catch (error) {
         console.log('\x1b[33m ERROR: \x1b[0m', error);
@@ -53,6 +63,15 @@ const AppContent = () => {
 
     checkAuthentication();
   }, [dispatch]);
+
+  if (loading) {
+    return (
+      <ThemeProvider>
+        <Loading />
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ThemeProvider>

@@ -9,7 +9,7 @@ import { getLocalData } from '../utils/helper/user';
 // Alternative host names:
 const host_name = 'http://192.168.1.13:5050/'; // Home host name
 // const host_name = 'http://localhost:5050/'; // Not work on React Native
-// const host_name = 'http://192.168.1.69:5050/'; // For Kai Coffee
+// const host_name = 'http://192.168.0.45:5050/'; // For Kai Coffee
 
 export const CONSTANTS = {
   ENDPOINTS: {
@@ -206,11 +206,13 @@ export const CONSTANTS = {
       GET_ALL: `booking/getAllBookings`,
 
       /**
-       * The endpoint for getting booking by id.
+       * The endpoint for updating a booking.
        *
-       * @url http://host/booking/getBookingById
-       * @method GET
-       * @param {string} booking_id - The booking id.
+       * @url http://host/booking/updateBooking
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.booking_id - The booking id.
+       * @param {string} data.booking_status - The booking status.
        * @returns {number} response.data.statusCode - The status code.
        * @returns {string} response.data.message - The message.
        * @returns {Object} response.data.data - The booking data.
@@ -231,6 +233,36 @@ export const CONSTANTS = {
        * @returns {Object} response.data.data - The notification list of user.
        */
       GET_BY_USER_ID: `notification/getNotificationByUserId`,
+
+      /**
+       * The endpoint for creating a notification.
+       *
+       * @url http://host/notification/createNotification
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.user_id - The user id.
+       * @param {string} data.booking_id - The booking id.
+       * @param {string} data.sender_id - The property id.
+       * @param {string} data.receiver_id - The notification type.
+       * @param {string} data.message - The notification content.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - The notification data.
+       */
+      CREATE: `notification/createNotification`,
+
+      /**
+       * The endpoint for updating a notification.
+       *
+       * @url http://host/notification/updateNotification
+       * @method POST
+       * @param {Object} data - BODY
+       * @param {string} data.noti_id - The notification id.
+       * @param {string} data.seen - The is_read status.
+       * @returns {number} response.data.statusCode - The status code.
+       * @returns {string} response.data.message - The message.
+       * @returns {Object} response.data.data - Updated notification data.
+       */
       UPDATE: `notification/updateNotification`,
     },
   },

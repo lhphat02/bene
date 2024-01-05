@@ -9,6 +9,7 @@ import useUserData from '../../hooks/useUser';
 import createBooking from '../../redux/features/bookings/actions/createBooking';
 import { formatDate, getDayCount } from '../../utils/formatter';
 import getStyles from './styles';
+import { useTranslation } from 'react-i18next';
 
 const dateInput = [
   {
@@ -35,6 +36,9 @@ const BookingScreen = ({ navigation, route }) => {
 
   // Get the dark mode value from the ThemeContext
   const { isDarkMode } = useContext(ThemeContext);
+
+  // Get the translation function from the useTranslation hook
+  const { t } = useTranslation();
 
   // Get the styles based on the dark mode value
   const styles = getStyles(isDarkMode);
@@ -115,7 +119,7 @@ const BookingScreen = ({ navigation, route }) => {
       </TouchableOpacity>
 
       {/* Header */}
-      <Text style={styles.header}>BOOKING</Text>
+      <Text style={styles.header}>{t('reservation.title')}</Text>
 
       <View style={styles.form}>
         {/* Date pickers */}
@@ -162,11 +166,11 @@ const BookingScreen = ({ navigation, route }) => {
         {/* Number of guests */}
         <View style={styles.textInput_container}>
           <Text style={styles.label}>
-            Number of guests (Max guest: {data.max_guests})
+            {t('reservation.totalGuests')} (Max guest: {data.max_guests})
           </Text>
           <TextInput
             style={styles.textInput}
-            placeholder="Number of guests"
+            placeholder={t('reservation.totalGuests')}
             placeholderTextColor={isDarkMode ? 'white' : 'black'}
             keyboardType="numeric"
             onChangeText={handleInputChange('guests')}
@@ -175,12 +179,12 @@ const BookingScreen = ({ navigation, route }) => {
 
         {/* Price per night */}
         <Text style={styles.text}>
-          Price per night: {data.price_per_night} $
+          {t('property.pricePerNight')} : {data.price_per_night} $
         </Text>
 
         {/* Total price */}
         <Text style={styles.text}>
-          Total: {''}
+          {t('reservation.totalPrice')} : {''}
           {getDayCount(formData.checkin, formData.checkout) *
             data.price_per_night}{' '}
           $
@@ -190,7 +194,7 @@ const BookingScreen = ({ navigation, route }) => {
       {/* Reserve button */}
       <TouchableOpacity style={styles.button} onPress={handleCreateBooking}>
         <Ionicons name="checkmark-circle" size={24} color="white" />
-        <Text style={styles.button_text}>Reserve your home</Text>
+        <Text style={styles.button_text}>{t('common.submit')}</Text>
       </TouchableOpacity>
     </View>
   );

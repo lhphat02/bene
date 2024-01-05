@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import Loading from '../Loading';
-import getAllProperties from '../../redux/features/properties/actions/getAllProperties';
 import getStyles from './styles';
 import { ThemeContext } from '../../context/ThemeContext';
 import { getLocalData } from '../../utils/helper/user';
@@ -20,6 +19,11 @@ const NotificationList = () => {
   const notifications = useSelector(
     (state) => state.notification.notifications
   );
+  const reversedNotifications = useMemo(
+    () => [...notifications].reverse(),
+    [notifications]
+  );
+
   const navigation = useNavigation();
   const styles = useMemo(() => getStyles(isDarkMode), [isDarkMode]);
 
@@ -66,7 +70,7 @@ const NotificationList = () => {
     <View style={styles.list}>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={notifications}
+        data={reversedNotifications}
         renderItem={({ item }) => <NotiTab data={item} />}
         keyExtractor={(item) => item._id}
       />

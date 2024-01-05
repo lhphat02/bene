@@ -11,6 +11,7 @@ import { shortener } from '../../utils/formatter';
 const PropertyDetailScreen = ({ navigation, route }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const { data } = route.params;
+  const { t } = useTranslation();
   const styles = getStyles(isDarkMode);
   const isImageUrl = data.image
     ? shortener(data.image, 4) === 'http...'
@@ -43,7 +44,7 @@ const PropertyDetailScreen = ({ navigation, route }) => {
         <Text style={styles.header}>{data?.property_name || 'House'}</Text>
 
         <Text style={styles.header}>
-          Price per night: $ {data?.price_per_night || 'Price'}
+          {t('property.pricePerNight')}: $ {data?.price_per_night || 'Price'}
         </Text>
 
         <Text style={styles.description}>
@@ -52,19 +53,21 @@ const PropertyDetailScreen = ({ navigation, route }) => {
 
         <Divider color={isDarkMode ? 'white' : 'black'} />
 
-        <Text style={styles.text}>Location: {data?.address || 'Address'}</Text>
-
-        <Text style={styles.text}>Size: {data?.size || 'Size'} m²</Text>
-
         <Text style={styles.text}>
-          Total bedrooms: {data?.bedrooms || 'Bedrooms'}
+          {t('property.location')}: {data?.address || 'Address'}
         </Text>
 
         <Text style={styles.text}>
-          Total beds: {data?.bed_count || 'Bed Count'}
+          {t('property.size')}: {data?.size || 'Size'} m²
         </Text>
 
-        <Text style={styles.text}>Home type: {data?.type || 'Type'}</Text>
+        <Text style={styles.text}>
+          {t('property.totalBedrooms')}: {data?.bedrooms || 'Bedrooms'}
+        </Text>
+
+        <Text style={styles.text}>
+          {t('property.totalBeds')}: {data?.beds || 'Bed Count'}
+        </Text>
       </ScrollView>
 
       <TouchableOpacity
@@ -74,7 +77,7 @@ const PropertyDetailScreen = ({ navigation, route }) => {
         }}
       >
         <Ionicons name="create" size={24} color="white" />
-        <Text style={styles.book_button_text}>Edit Property</Text>
+        <Text style={styles.book_button_text}>{t('property.edit')}</Text>
       </TouchableOpacity>
     </View>
   );

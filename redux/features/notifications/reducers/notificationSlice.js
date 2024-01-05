@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import getUserNotification from '../actions/getUserNotification';
+import updateNotiStatus from '../actions/updateNotiStatus';
 
 const initialState = {
   notifications: [],
@@ -21,6 +22,17 @@ const notificationSlice = createSlice({
         state.notifications = action.payload.data;
       })
       .addCase(getUserNotification.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(updateNotiStatus.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateNotiStatus.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateNotiStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
